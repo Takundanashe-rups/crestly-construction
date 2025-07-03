@@ -65,7 +65,7 @@ export default function MobileNav({ setMenuOpen }: MobileNavProps) {
         <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 bg-blue-50">
           <div className="flex items-center">
             <img 
-              src="/Crestly-Logo-2.png"
+              src="/Crestlyy3.png"
               alt="Crestly Logo"
               className="object-contain h-10 xs:h-12 sm:h-14 w-auto max-w-[140px]"
             />

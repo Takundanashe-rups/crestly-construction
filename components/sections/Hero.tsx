@@ -8,7 +8,7 @@ const backgroundImages = [
   '/images/back-1.jpg',
   '/images/back-2.jpg',
   '/images/back-3.jpg',
-  '/images/back-4.jpg',
+  '/images/back-5.jpg',
 ];
 
 export default function Hero() {
