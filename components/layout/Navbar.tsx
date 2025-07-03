@@ -39,7 +39,7 @@ export default function Navbar() {
         <div className="flex items-center flex-shrink-0">
           <Link href="/" className="relative logo-container group">
             <img 
-              src="/Crestlyy3.png" 
+              src="/Crestlyy.png" 
               alt="Crestly Construction Logo" 
               className="h-16 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
             />
