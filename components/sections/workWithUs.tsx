@@ -1,190 +1,129 @@
 'use client';
 
-import { motion, Variants } from 'framer-motion';
-import { FaTools, FaHandshake, FaUsers } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
 
+const WhyWorkWithUs = () => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
-  },
-  exit: { opacity: 0, transition: { duration: 0.5 } }
-};
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
-const cardItemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: i * 0.2,
-      duration: 0.6,
-      ease: [0.16, 1, 0.3, 1]
-    }
-  }),
-  hover: {
-    y: -10,
-    scale: 1.03,
-    transition: {
-      duration: 0.4,
-      ease: [0.25, 1, 0.5, 1]
-    }
-  },
-  exit: { opacity: 0, y: 30, transition: { duration: 0.5 } }
-};
-
-const iconVariants: Variants = {
-  hover: {
-    rotate: [0, -10, 8, -5, 0],
-    transition: {
-      duration: 0.8
-    }
+  if (!hasMounted) {
+    return (
+      <section className="w-full bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto rounded-2xl shadow-xl bg-white min-h-[600px] animate-pulse" />
+      </section>
+    );
   }
+
+  return (
+    <section className="w-full bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto rounded-2xl lg:rounded-3xl shadow-xl overflow-hidden bg-white">
+        <div className="flex flex-col lg:flex-row items-stretch">
+          {/* Left Side: Image + Text Overlay */}
+          <div className="relative w-full lg:w-1/2 h-[300px] sm:h-[400px] lg:h-auto min-h-[400px]">
+            {/* Background Image */}
+            <Image
+              src="/images/projects.webp"
+              alt="Work with us image"
+              fill
+              className={`object-cover transition-opacity duration-500 ${
+                imageLoaded ? 'opacity-100' : 'opacity-0'
+              }`}
+              onLoad={() => setImageLoaded(true)}
+              quality={85}
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
+            />
+
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/30" />
+
+            {/* Overlay Text */}
+            <div className="absolute inset-0 flex flex-col justify-center items-center text-white px-6 text-center">
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wide leading-tight">
+                WORK <br className="hidden sm:block" /> WITH US
+              </h3>
+              <div className="w-16 h-1 bg-white mt-4 rounded-full" />
+            </div>
+          </div>
+
+          {/* Right Side: Content */}
+          <div className="w-full lg:w-1/2 p-6 sm:p-10 lg:p-14 xl:p-16 flex flex-col justify-center bg-white relative">
+            {/* Decorative Grid */}
+            <div className="absolute top-0 right-0 w-32 h-32 opacity-5 pointer-events-none">
+              <svg viewBox="0 0 100 100" className="w-full h-full">
+                <defs>
+                  <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#A5852A" strokeWidth="1" />
+                  </pattern>
+                </defs>
+                <rect width="100" height="100" fill="url(#grid)" />
+              </svg>
+            </div>
+
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-2 mb-4">
+                <div className="w-8 h-[2px] bg-amber-500" />
+                <span className="text-amber-600 font-semibold tracking-wider text-xs sm:text-sm uppercase">
+                  EST. 2022
+                </span>
+              </div>
+
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-4">
+                Solving Housing Challenges
+                <span className="block text-amber-600">With Lasting Impact</span>
+              </h2>
+
+              <p className="text-gray-600 text-base sm:text-lg mb-6">
+                We offer a comprehensive spectrum of construction services with specialized focus on
+                <span className="font-medium text-gray-800"> housing development</span>,
+                <span className="font-medium text-gray-800"> infrastructure construction</span>, and
+                <span className="font-medium text-gray-800"> project management</span>.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 mb-6">
+                {[
+                  'Housing Development',
+                  'Infrastructure Construction',
+                  'Commercial Properties',
+                  'Project Management',
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-2 text-gray-700 text-sm sm:text-base">
+                    <span className="w-2 h-2 bg-amber-600 rounded-full" />
+                    {item}
+                  </div>
+                ))}
+              </div>
+
+              {/* CTA */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/about"
+                  className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white py-3 px-6 rounded-lg font-medium transition-transform duration-200 transform hover:scale-105 shadow"
+                >
+                  Discover More
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+                <Link
+                  href="/projects"
+                  className="inline-flex items-center justify-center border-2 border-amber-600 text-amber-600 hover:bg-amber-50 py-3 px-6 rounded-lg font-medium transition-all duration-200"
+                >
+                  View Projects
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
-
-export default function WorkWithUsSection() {
-  return (
-    <motion.section
-
-      className="relative py-12 md:py-20 px-4 md:px-12 w-[95%] mx-auto text-center isolate"
-      initial="hidden"
-      whileInView="visible"
-      exit="exit"
-      viewport={{ once: true, margin: "-100px" }}
-      variants={containerVariants}
-    >
-      <div className="absolute inset-0 z-0 overflow-hidden rounded-2xl">
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-
-            backgroundImage: `linear-gradient(to right, #1e3a8a 1px, transparent 1px), linear-gradient(to bottom, #1e3a8a 1px, transparent 1px)`,
-            backgroundSize: '40px 40px'
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-white to-blue-100/80" />
-      </div>
-
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <motion.h2
-
-          className="text-2xl md:text-4xl font-extrabold text-blue-900 mb-4 md:mb-6 tracking-tight leading-snug"
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.8 }
-            },
-            exit: { opacity: 0, y: 20, transition: { duration: 0.4 } }
-          }}
-        >
-          Our Mission & Values
-        </motion.h2>
-
-        <motion.p
-
-          className="text-lg md:text-xl text-blue-700 max-w-3xl mx-auto mb-8 md:mb-14 leading-relaxed px-4"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { delay: 0.3, duration: 0.8 }
-            },
-            exit: { opacity: 0, transition: { duration: 0.4 } }
-          }}
-        >
-          To empower Zimbabwe's infrastructure growth by delivering world-class construction services rooted in
-          quality, safety, and innovation.
-        </motion.p>
-
-        <motion.div
-
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
-          variants={containerVariants}
-        >
-          {[
-            {
-              title: 'Craftsmanship',
-
-              icon: <FaTools size={28} className="text-blue-800 md:w-8 md:h-8" />,
-              description:
-                "We don't cut corners. Every project reflects our engineering precision and structural integrity.",
-            },
-            {
-              title: 'Accountability',
-
-              icon: <FaHandshake size={28} className="text-blue-800 md:w-8 md:h-8" />,
-              description:
-                'We meet deadlines, respect budgets, and own every phase of the construction process.',
-            },
-            {
-              title: 'Community Impact',
-
-              icon: <FaUsers size={28} className="text-blue-800 md:w-8 md:h-8" />,
-              description:
-                'We hire local, train local, and build with sustainability and social responsibility in mind.',
-            },
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-
-              className="group relative border border-gray-200 bg-gradient-to-br from-blue-50 to-white rounded-xl p-4 md:p-6 shadow-sm overflow-hidden"
-              variants={cardItemVariants}
-              custom={i}
-              whileHover="hover"
-              exit="exit"
-            >
-              <div className="absolute inset-0 rounded-xl overflow-hidden">
-                <motion.div
-                  className="absolute w-[150%] h-[40px] bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"
-                  initial={{ top: "100%" }}
-                  whileHover={{
-                    top: "-10%",
-                    transition: { duration: 0.6 }
-                  }}
-                />
-              </div>
-
-              <div className="relative z-10">
-                <motion.div
-
-                  className="flex justify-center mb-3 md:mb-4"
-                  variants={iconVariants}
-                  whileHover="hover"
-                >
-                  {item.icon}
-                </motion.div>
-
-
-                <h3 className="text-xl md:text-2xl font-bold text-blue-900 mb-2">{item.title}</h3>
-                <motion.p
-
-                  className="text-gray-700 text-sm md:text-base leading-relaxed"
-                  initial={{ opacity: 0.8 }}
-                  whileHover={{
-                    opacity: 1,
-
-                    color: '#1e3a8a'
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {item.description}
-                </motion.p>
-              </div>
-
-              <div className="absolute -bottom-4 -right-4 w-8 h-8 rounded-full bg-blue-200/20 blur-sm" />
-              <div className="absolute -top-4 -left-4 w-6 h-6 rounded-full bg-amber-200/20 blur-sm" />
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </motion.section>
-  );
-}
+export default WhyWorkWithUs;
