@@ -1,7 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useClientPathname } from '@/hooks/useClientPathname';
  
 import { 
   FaHome,
@@ -50,6 +50,16 @@ const navLinks = [
 
 export default function MobileNav({ setMenuOpen }: MobileNavProps) {
   const [servicesExpanded, setServicesExpanded] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const pathname = useClientPathname();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null; // Don't render during SSR
+  }
 
   return (
     <>
@@ -165,5 +175,3 @@ export default function MobileNav({ setMenuOpen }: MobileNavProps) {
     </>
   );
 }
-
-

@@ -1,16 +1,22 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import MobileNav from './MobileNav';
+import { useClientPathname } from '@/hooks/useClientPathname';
 import { FaSearch, FaThLarge, FaChevronDown, FaCog, FaHammer, FaFire, FaHome } from 'react-icons/fa';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const pathname = usePathname();
+  const [isClient, setIsClient] = useState(false);
+  const pathname = useClientPathname();
   const dropdownCloseTimeout = useRef<NodeJS.Timeout | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  // Ensure client-side rendering
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -29,16 +35,40 @@ export default function Navbar() {
 
   // Helper function to check if current page matches services
   const isServicesActive = () => {
-    return pathname.startsWith('/services');
+    return pathname?.startsWith('/services') || false;
   };
+
+  // Render loading state during hydration
+  if (!isClient) {
+    return (
+      <nav className="bg-white shadow-md px-4 md:px-8 py-2 md:py-3 flex items-center justify-between w-full relative z-50">
+        <div className="flex items-center flex-shrink-0">
+          <Link href="/" className="relative logo-container group">
+            <img 
+              src="/Crestlyy.png" 
+              alt="Crestly Construction Logo" 
+              className="h-16 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+            />
+          </Link>
+        </div>
+        <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
+          <Link 
+            href="/contact"
+            className="bg-blue-900 text-white px-3 md:px-4 py-2 rounded-md font-semibold hover:bg-blue-800 transition-all duration-200 text-sm whitespace-nowrap shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
+            Get In Touch »
+          </Link>
+        </div>
+      </nav>
+    );
+  }
 
   return (
     <>
       <nav className="bg-white shadow-md px-4 md:px-8 py-2 md:py-3 flex items-center justify-between w-full relative z-50">
-        {/* Logo  */}
+        {/* Logo */}
         <div className="flex items-center flex-shrink-0">
           <Link href="/" className="relative logo-container group">
-            
             <img 
               src="/Crestlyy.png" 
               alt="Crestly Construction Logo" 
@@ -53,7 +83,6 @@ export default function Navbar() {
           <Link href="/" className="relative hover:text-blue-700 transition-colors duration-200 py-2 px-3 rounded-md hover:bg-blue-50 flex items-center gap-2">
             <FaHome className="text-sm" />
             Home
-            {/* Use border for active indicator instead of animated dot for performance */}
             {pathname === '/' && (
               <div className="absolute bottom-0 left-0 w-full h-1 bg-amber-500"></div>
             )}

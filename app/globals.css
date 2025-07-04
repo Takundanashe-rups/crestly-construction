@@ -40,8 +40,18 @@ body {
   from { transform: translateY(-100%); }
   to { transform: translateY(0); }
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 .animate-slideIn {
   animation: slideIn 0.25s ease;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease;
 }
 
 .logo-container {
