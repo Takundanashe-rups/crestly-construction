@@ -38,6 +38,7 @@ export default function Navbar() {
         {/* Logo - Improved sizing and positioning */}
         <div className="flex items-center flex-shrink-0">
           <Link href="/" className="relative logo-container group">
+            
             <img 
               src="/Crestlyy.png" 
               alt="Crestly Construction Logo" 
@@ -52,15 +53,16 @@ export default function Navbar() {
           <Link href="/" className="relative hover:text-blue-700 transition-colors duration-200 py-2 px-3 rounded-md hover:bg-blue-50 flex items-center gap-2">
             <FaHome className="text-sm" />
             Home
+            {/* Use border for active indicator instead of animated dot for performance */}
             {pathname === '/' && (
-              <div className="absolute -bottom-1 right-0 w-2 h-2 bg-amber-500 rounded-full shadow-sm animate-pulse"></div>
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-amber-500"></div>
             )}
           </Link>
           
           <Link href="/about" className="relative hover:text-blue-700 transition-colors duration-200 py-2 px-3 rounded-md hover:bg-blue-50">
             About Us
             {pathname === '/about' && (
-              <div className="absolute -bottom-1 right-0 w-2 h-2 bg-amber-500 rounded-full shadow-sm animate-pulse"></div>
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-amber-500"></div>
             )}
           </Link>
           
@@ -104,11 +106,12 @@ export default function Navbar() {
             
             {/* Buffer zone for  mouse movement */}
             <div className="absolute left-0 w-full h-5 -top-5 z-[999]" aria-hidden="true"></div>
+            {/* Use simpler dropdown animation for performance */}
             <div
-              className={`absolute left-0 mt-1 min-w-[280px] bg-white border border-gray-100 rounded-xl shadow-2xl transition-all duration-300 transform z-[999] ${
+              className={`absolute left-0 mt-1 min-w-[280px] bg-white border border-gray-100 rounded-xl shadow-lg transition-all duration-200 z-[999] ${
                 dropdownOpen
-                  ? 'opacity-100 visible translate-y-0 scale-100' 
-                  : 'opacity-0 invisible -translate-y-2 scale-95 pointer-events-none'
+                  ? 'opacity-100 visible translate-y-0' 
+                  : 'opacity-0 invisible -translate-y-2 pointer-events-none'
               }`}
               onMouseEnter={() => {
                 if (dropdownCloseTimeout.current) clearTimeout(dropdownCloseTimeout.current);
@@ -127,7 +130,6 @@ export default function Navbar() {
                 <div className="px-4 py-2 border-b border-gray-100">
                   <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide">Our Services</h3>
                 </div>
-                
                 {/* Menu Items */}
                 <div className="py-2">
                   <Link 
@@ -147,7 +149,6 @@ export default function Navbar() {
                       <div className="w-2 h-2 bg-amber-500 rounded-full shadow-sm animate-pulse ml-2"></div>
                     )}
                   </Link>
-                  
                   <Link 
                     href="/services/boiler-making" 
                     prefetch={false} 
@@ -165,7 +166,6 @@ export default function Navbar() {
                       <div className="w-2 h-2 bg-amber-500 rounded-full shadow-sm animate-pulse ml-2"></div>
                     )}
                   </Link>
-                  
                   <Link 
                     href="/services/welding" 
                     prefetch={false} 
@@ -184,7 +184,6 @@ export default function Navbar() {
                     )}
                   </Link>
                 </div>
-                
                 {/* Footer */}
                 <div className="px-4 py-2 border-t border-gray-100 bg-gray-50 rounded-b-xl">
                   <Link 
@@ -202,14 +201,14 @@ export default function Navbar() {
           <Link href="/projects" className="relative hover:text-blue-700 transition-colors duration-200 py-2 px-3 rounded-md hover:bg-blue-50">
             Projects
             {pathname === '/projects' && (
-              <div className="absolute -bottom-1 right-0 w-2 h-2 bg-amber-500 rounded-full shadow-sm animate-pulse"></div>
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-amber-500"></div>
             )}
           </Link>
           
           <Link href="/contact" className="relative hover:text-blue-700 transition-colors duration-200 py-2 px-3 rounded-md hover:bg-blue-50">
             Contact
             {pathname === '/contact' && (
-              <div className="absolute -bottom-1 right-0 w-2 h-2 bg-amber-500 rounded-full shadow-sm animate-pulse"></div>
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-amber-500"></div>
             )}
           </Link>
         </div>

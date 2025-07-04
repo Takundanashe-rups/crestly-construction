@@ -2,21 +2,30 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ProjectsPage() {
   return (
     <>
       {/* Header section with background image and gradient overlay */}
       <div
-        className="relative h-96 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/Projects3.jpg')" }}
+        className="relative h-96 w-full overflow-hidden"
         aria-label="Crestley Construction Project Showcase"
       >
+        {/* Optimized Background Image for LCP */}
+        <Image
+          src="/images/Projects3.jpg"
+          alt="Crestley Construction Project Showcase"
+          fill
+          priority
+          className="object-cover object-center z-0"
+          sizes="100vw"
+        />
         {/* Gradient overlay for contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/10 z-10"></div>
 
         {/* Hero Content */}
-        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+        <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">
           <motion.h1
             className="text-4xl md:text-6xl font-bold text-white"
             initial={{ opacity: 0, y: 30 }}

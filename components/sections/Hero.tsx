@@ -3,8 +3,9 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Typewriter } from 'react-simple-typewriter';
+import Image from 'next/image';
 
-const backgroundImages = [
+const backgroundImages: string[] = [
   '/images/back-1.jpg',
   '/images/back-2.jpg',
   '/images/back-3.jpg',
@@ -37,14 +38,14 @@ export default function Hero() {
   useEffect(() => {
     if (isMobile) {
       // Only preload current and next image on mobile
-      const currentImg = new Image();
+      const currentImg = new window.Image();
       currentImg.src = backgroundImages[currentIndex];
-      const nextImg = new Image();
+      const nextImg = new window.Image();
       nextImg.src = backgroundImages[(currentIndex + 1) % backgroundImages.length];
     } else {
       // Preload all images on desktop
       backgroundImages.forEach((src) => {
-        const img = new Image();
+        const img = new window.Image();
         img.src = src;
       });
     }
@@ -86,30 +87,33 @@ export default function Hero() {
       
       {/* Background Slider */}
       <div className="absolute inset-0">
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={currentIndex}
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ 
-              backgroundImage: `url(${backgroundImages[currentIndex]})`,
-              // Mobile optimization: reduce image quality on small screens
-              ...(isMobile && {
-                backgroundSize: 'cover',
-                backgroundPosition: 'center center',
-                transform: 'scale(1.05)', // Slight scale to avoid white edges
-              })
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ 
-              duration: FADE_DURATION / 1000,
-              ease: 'easeInOut'
-            }}
-            aria-hidden="true"
+  <AnimatePresence initial={false}>
+    {backgroundImages.map((src, idx) => (
+      idx === currentIndex && (
+        <motion.div
+          key={src}
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: FADE_DURATION / 1000, ease: 'easeInOut' }}
+          aria-hidden="true"
+        >
+          <Image
+            src={src}
+            alt="Crestly Construction Hero Background"
+            fill
+            priority={idx === 0}
+            className="object-cover object-center z-0 select-none pointer-events-none"
+            quality={isMobile ? 60 : 85}
+            sizes="100vw"
+            draggable={false}
           />
-        </AnimatePresence>
-      </div>
+        </motion.div>
+      )
+    ))}
+  </AnimatePresence>
+</div>
 
       {/* Lighter Overlay for Mobile */}
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50 md:from-black/60 md:via-black/40 md:to-black/60 lg:from-black/70 lg:via-black/50 lg:to-black/70" />

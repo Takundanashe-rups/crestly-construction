@@ -64,6 +64,7 @@ export default function MobileNav({ setMenuOpen }: MobileNavProps) {
         {/* Header with logo and close button */}
         <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 bg-blue-50">
           <div className="flex items-center">
+            {/* Consider replacing with next/image for optimization */}
             <img 
               src="/Crestlyy3.png"
               alt="Crestly Logo"
@@ -84,17 +85,18 @@ export default function MobileNav({ setMenuOpen }: MobileNavProps) {
           <div className="space-y-1 xs:space-y-2">
             {/* Regular Nav Links */}
             {navLinks.map(({ label, icon, href }, i) => (
-              <Link
-                key={i}
-                onClick={() => setMenuOpen(false)}
-                href={href}
-                className="flex items-center gap-3 xs:gap-4 text-base xs:text-lg text-blue-900 hover:text-blue-700 font-medium px-3 xs:px-4 py-3 xs:py-4 rounded-lg transition-all duration-200 hover:bg-blue-50 border border-transparent hover:border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              >
-                <span className="text-lg xs:text-xl text-blue-600">{icon}</span>
-                {label}
-              </Link>
-            ))}
-
+  <Link
+    key={i}
+    onClick={() => setMenuOpen(false)}
+    href={href}
+    prefetch={false}
+    className="flex items-center gap-3 xs:gap-4 text-base xs:text-lg text-blue-900 hover:text-blue-700 font-medium px-3 xs:px-4 py-3 xs:py-4 rounded-lg transition-all duration-200 hover:bg-blue-50 border border-transparent hover:border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+  >
+    <span className="text-lg xs:text-xl text-blue-600">{icon}</span>
+    {label}
+  </Link>
+))}
+            
             {/* Business Units Expandable Section */}
             <div className="border border-gray-200 rounded-lg overflow-hidden">
               {/* Business Units Header */}
@@ -117,14 +119,14 @@ export default function MobileNav({ setMenuOpen }: MobileNavProps) {
               </button>
 
               {/* Services Dropdown Content */}
-              <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                servicesExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-              }`}>
-                <div className="bg-gray-50 border-t border-gray-200">
+              {/* For smoother animation, use transform: scaleY instead of max-height. Add .service-dropdown CSS class for this. */}
+              {servicesExpanded && (
+                <div className="service-dropdown bg-gray-50 border-t border-gray-200 transform-origin-top transition-transform duration-300">
                   {services.map(({ label, icon, href, description }, i) => (
                     <Link
                       key={i}
                       href={href}
+                      prefetch={false}
                       onClick={() => setMenuOpen(false)}
                       className="flex items-start gap-3 px-6 xs:px-8 py-3 xs:py-4 text-blue-900 hover:text-blue-700 hover:bg-blue-50 transition-all duration-200 border-l-4 border-transparent hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
                     >
@@ -135,7 +137,6 @@ export default function MobileNav({ setMenuOpen }: MobileNavProps) {
                       </div>
                     </Link>
                   ))}
-                  
                   {/* View All Services Link */}
                   <div className="px-6 xs:px-8 py-2 xs:py-3 border-t border-gray-200">
                     <Link
@@ -147,7 +148,7 @@ export default function MobileNav({ setMenuOpen }: MobileNavProps) {
                     </Link>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
           
@@ -165,3 +166,5 @@ export default function MobileNav({ setMenuOpen }: MobileNavProps) {
     </>
   );
 }
+
+
