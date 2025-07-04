@@ -11,10 +11,7 @@ interface FloatingCircleProps {
   'aria-hidden'?: boolean;
 }
 
-/**
- * FloatingCircle - Reusable animated floating circle for backgrounds.
- * Use aria-hidden for decorative purposes.
- */
+
 const FloatingCircle: React.FC<FloatingCircleProps> = ({
   className,
   delay,

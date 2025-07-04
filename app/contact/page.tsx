@@ -35,7 +35,7 @@ export default function ContactPage() {
     // Honeypot check
     if (form.honey) return;
     setSubmitting(true);
-    // Simulate submission (replace with real API call)
+    // Simulate submission to be replaced with real API call)
     setTimeout(() => {
       setSubmitting(false);
       setSuccess(true);
@@ -75,7 +75,7 @@ export default function ContactPage() {
         onSubmit={handleSubmit}
         autoComplete="off"
       >
-        {/* Honeypot field - hidden from users */}
+        {/* Honeypot field  */}
         <input
           type="text"
           name="honey"

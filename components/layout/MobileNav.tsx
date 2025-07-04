@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-// @ts-ignore: Could not find a declaration file for module 'react-icons/fa'.
+ 
 import { 
   FaHome,
   FaUserTie, 
@@ -64,7 +64,7 @@ export default function MobileNav({ setMenuOpen }: MobileNavProps) {
         {/* Header with logo and close button */}
         <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 bg-blue-50">
           <div className="flex items-center">
-            {/* Consider replacing with next/image for optimization */}
+            
             <img 
               src="/Crestlyy3.png"
               alt="Crestly Logo"
@@ -119,7 +119,6 @@ export default function MobileNav({ setMenuOpen }: MobileNavProps) {
               </button>
 
               {/* Services Dropdown Content */}
-              {/* For smoother animation, use transform: scaleY instead of max-height. Add .service-dropdown CSS class for this. */}
               {servicesExpanded && (
                 <div className="service-dropdown bg-gray-50 border-t border-gray-200 transform-origin-top transition-transform duration-300">
                   {services.map(({ label, icon, href, description }, i) => (

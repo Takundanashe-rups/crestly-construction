@@ -83,7 +83,7 @@ export default function Hero() {
   if (!hasMounted) return null;
 
   return (
-    <section className="relative h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-screen min-h-[500px] sm:min-h-[600px] w-full overflow-hidden flex items-center justify-center">
+    <section className="relative h-[70vh] sm:h-[80vh] md:h-[60vh] lg:h-[60vh] min-h-[400px] max-h-[700px] w-full overflow-hidden flex items-center justify-center">
       
       {/* Background Slider */}
       <div className="absolute inset-0">

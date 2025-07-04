@@ -35,7 +35,7 @@ export default function Navbar() {
   return (
     <>
       <nav className="bg-white shadow-md px-4 md:px-8 py-2 md:py-3 flex items-center justify-between w-full relative z-50">
-        {/* Logo - Improved sizing and positioning */}
+        {/* Logo  */}
         <div className="flex items-center flex-shrink-0">
           <Link href="/" className="relative logo-container group">
             
