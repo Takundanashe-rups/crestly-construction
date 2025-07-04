@@ -22,7 +22,7 @@ const EXPERTISE_CARDS = [
     title: 'Boiler Making',
     description:
       'Our boiler making specialists provide fabrication, installation, and repair of boilers and pressure vessels, ensuring compliance with industry standards and safety regulations.',
-    image: '/images/bioler-making.jpg', 
+    image: '/images/boiler-making-1.jpg', 
     cta: 'Explore Boiler Making',
     ctaHref: '/services/boiler-making',
   },
