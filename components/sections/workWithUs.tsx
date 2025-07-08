@@ -12,6 +12,13 @@ const WhyWorkWithUs = () => {
     setHasMounted(true);
   }, []);
 
+  const services = [
+    'Housing Development',
+    'Infrastructure Construction', 
+    'Commercial Properties',
+    'Project Management',
+  ];
+
   if (!hasMounted) {
     return (
       <section className="w-full bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -24,9 +31,9 @@ const WhyWorkWithUs = () => {
     <section className="w-full bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto rounded-2xl lg:rounded-3xl shadow-xl overflow-hidden bg-white">
         <div className="flex flex-col lg:flex-row items-stretch">
+          
           {/* Left Side: Image + Text Overlay */}
           <div className="relative w-full lg:w-1/2 h-[300px] sm:h-[400px] lg:h-auto min-h-[400px]">
-            {/* Background Image */}
             <Image
               src="/images/projects.webp"
               alt="Work with us image"
@@ -54,8 +61,9 @@ const WhyWorkWithUs = () => {
 
           {/* Right Side: Content */}
           <div className="w-full lg:w-1/2 p-6 sm:p-10 lg:p-14 xl:p-16 flex flex-col justify-center bg-white relative">
-            {/* Decorative Grid */}
-            <div className="absolute top-0 right-0 w-32 h-32 opacity-5 pointer-events-none">
+            
+            {/* Decorative Grid - Simplified */}
+            <div className="absolute top-0 right-0 w-32 h-32 opacity-5">
               <svg viewBox="0 0 100 100" className="w-full h-full">
                 <defs>
                   <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
@@ -87,12 +95,7 @@ const WhyWorkWithUs = () => {
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 mb-6">
-                {[
-                  'Housing Development',
-                  'Infrastructure Construction',
-                  'Commercial Properties',
-                  'Project Management',
-                ].map((item, i) => (
+                {services.map((item, i) => (
                   <div key={i} className="flex items-center gap-2 text-gray-700 text-sm sm:text-base">
                     <span className="w-2 h-2 bg-amber-600 rounded-full" />
                     {item}
@@ -100,11 +103,11 @@ const WhyWorkWithUs = () => {
                 ))}
               </div>
 
-              {/* CTA */}
+              {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
                   href="/about"
-                  className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white py-3 px-6 rounded-lg font-medium transition-transform duration-200 transform hover:scale-105 shadow"
+                  className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white py-3 px-6 rounded-lg font-medium transition-all duration-200 hover:scale-105 shadow"
                 >
                   Discover More
                   <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

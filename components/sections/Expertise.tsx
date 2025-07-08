@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 // Expertise data
 const EXPERTISE_CARDS = [
@@ -56,11 +57,21 @@ const Expertise: React.FC = () => {
               data-aos-delay={idx * 100}
             >
               <div className="flex flex-col md:flex-row h-full">
-                {/* Left Image as background */}
-                <div
-                  className="image-section w-full md:w-1/2 h-48 md:h-64 lg:h-auto bg-cover bg-center"
-                  style={{ backgroundImage: `url(${card.image})` }}
-                ></div>
+                {/* Left Image with Next.js Image optimization and lazy loading */}
+                <div className="image-section w-full md:w-1/2 h-48 md:h-64 lg:h-auto relative bg-gray-200">
+                  {/* Fallback background color */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400" />
+                  
+                  <Image
+                    src={card.image}
+                    alt={`${card.title} service`}
+                    fill
+                    loading="lazy"
+                    className="object-cover object-center transition-opacity duration-500 hover:scale-105 transition-transform duration-300"
+                    quality={75}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
 
                 {/* Right Content */}
                 <div className="content-section w-full md:w-1/2 flex items-center">

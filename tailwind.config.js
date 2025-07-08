@@ -7,13 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        'sans': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-        'inter': ['Inter', 'sans-serif'],
+      transitionDuration: {
+        '1000': '1000ms',
       },
-      colors: {
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+      screens: {
+        'xs': '475px',
       },
     },
   },
