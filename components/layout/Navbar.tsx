@@ -195,14 +195,14 @@ export default function Navbar() {
                   >
                     <FaFire className="mr-3 text-orange-600 group-hover/item:text-orange-700 transition-colors duration-200" />
                     <div className="flex-1">
-                      <div className="font-semibold">Boiler Making</div>
-                      <div className="text-xs text-gray-500 group-hover/item:text-blue-600">Industrial boiler fabrication</div>
+                      <div className="font-semibold">Fabrication</div>
+                      <div className="text-xs text-gray-500 group-hover/item:text-blue-600">Sheet and metal fabrication</div>
                     </div>
                     {pathname === '/services/boiler-making' && (
                       <div className="w-2 h-2 bg-amber-500 rounded-full shadow-sm animate-pulse ml-2"></div>
                     )}
                   </Link>
-                  <Link 
+                  {/*<Link 
                     href="/services/welding" 
                     prefetch={false} 
                     className={`group/item flex items-center px-4 py-3 text-blue-900 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:text-blue-700 transition-all duration-200 border-l-4 border-transparent hover:border-blue-500 focus:border-blue-500 focus:bg-blue-50 focus:text-blue-700 focus:outline-none relative ${
@@ -218,10 +218,9 @@ export default function Navbar() {
                     {pathname === '/services/welding' && (
                       <div className="w-2 h-2 bg-amber-500 rounded-full shadow-sm animate-pulse ml-2"></div>
                     )}
-                  </Link>
+                  </Link> */}
                 </div>
-                {/* Footer */}
-                <div className="px-4 py-2 border-t border-gray-100 bg-gray-50 rounded-b-xl">
+                {/* Footer <div className="px-4 py-2 border-t border-gray-100 bg-gray-50 rounded-b-xl">
                   <Link 
                     href="/services" 
                     className="text-xs text-blue-600 hover:text-blue-700 font-medium hover:underline transition-all duration-200"
@@ -229,7 +228,8 @@ export default function Navbar() {
                   >
                     View all services →
                   </Link>
-                </div>
+                </div> */}
+                
               </div>
             </div>
           </div>

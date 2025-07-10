@@ -31,7 +31,7 @@ const services = [
     label: 'Fabrication',
     icon: <FaFire />,
     href: '/services/boiler-making',
-    description: 'Industrial boiler fabrication'
+    description: 'Sheet and metal fabrication'
   },
   
   /*
