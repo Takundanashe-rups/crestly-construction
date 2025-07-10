@@ -161,7 +161,7 @@ function Hero() {
             transition={{ delay: 0.6, duration: 0.4 }}
           >
             <button
-              className="bg-amber-600 hover:bg-amber-700 active:bg-amber-800 transition-colors duration-200 text-white font-medium py-2 px-5 sm:py-2.5 sm:px-6 md:py-3 md:px-8 rounded-md shadow-lg text-sm sm:text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transform hover:scale-105 active:scale-95 transition-transform"
+              className="bg-amber-600 hover:bg-amber-700 active:bg-amber-800 transition-colors duration-200 text-white font-medium py-2 px-5 sm:py-2.5 sm:px-6 md:py-3 md:px-8 rounded-md shadow-lg text-sm sm:text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transform hover:scale-105 active:scale-95"
               aria-label="Explore Our Projects"
             >
               Explore Our Projects
@@ -171,7 +171,7 @@ function Hero() {
       </div>
 
       {/* Slide Dots */}
-      <div className="absolute bottom-3 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex space-x-1.5 sm:space-x-2 hidden xs:flex">
+      <div className="absolute bottom-3 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-10 hidden xs:flex space-x-1.5 sm:space-x-2">
         {backgroundImages.map((_, idx) => (
           <button
             key={idx}

@@ -1,6 +1,7 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import MobileNav from './MobileNav';
 import { useClientPathname } from '@/hooks/useClientPathname';
 import { FaSearch, FaThLarge, FaChevronDown, FaCog, FaHammer, FaFire, FaHome } from 'react-icons/fa';
@@ -44,10 +45,13 @@ export default function Navbar() {
       <nav className="bg-white shadow-md px-4 md:px-8 py-2 md:py-3 flex items-center justify-between w-full relative z-50">
         <div className="flex items-center flex-shrink-0">
           <Link href="/" className="relative logo-container group">
-            <img 
-              src="/Crestlyy.png" 
+            <Image 
+              src="/Artboard-1@4x.png" 
               alt="Crestly Construction Logo" 
+              width={64}
+              height={64}
               className="h-16 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+              priority
             />
           </Link>
         </div>
@@ -69,10 +73,13 @@ export default function Navbar() {
         {/* Logo */}
         <div className="flex items-center flex-shrink-0">
           <Link href="/" className="relative logo-container group">
-            <img 
-              src="/Crestlyy.png" 
+            <Image 
+              src="/Artboard-1@4x.png" 
               alt="Crestly Construction Logo" 
+              width={64}
+              height={64}
               className="h-16 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+              priority
             />
             <div className="absolute inset-0 bg-blue-900/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 -z-10"></div>
           </Link>

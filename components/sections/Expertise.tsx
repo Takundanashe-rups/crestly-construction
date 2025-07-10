@@ -67,7 +67,7 @@ const Expertise: React.FC = () => {
                     alt={`${card.title} service`}
                     fill
                     loading="lazy"
-                    className="object-cover object-center transition-opacity duration-500 hover:scale-105 transition-transform duration-300"
+                    className="object-cover object-center transition-transform duration-300 hover:scale-105"
                     quality={75}
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />

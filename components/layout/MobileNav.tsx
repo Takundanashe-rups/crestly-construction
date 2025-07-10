@@ -2,14 +2,14 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useClientPathname } from '@/hooks/useClientPathname';
- 
-import { 
+
+import {
   FaHome,
-  FaUserTie, 
-  FaBuilding, 
-  FaProjectDiagram, 
-  FaEnvelope, 
-  FaTimes, 
+  FaUserTie,
+  FaBuilding,
+  FaProjectDiagram,
+  FaEnvelope,
+  FaTimes,
   FaChevronDown,
   FaCog,
   FaFire,
@@ -21,31 +21,32 @@ type MobileNavProps = {
 };
 
 const services = [
-  { 
-    label: 'Construction Services', 
-    icon: <FaCog />, 
+  {
+    label: 'Construction Services',
+    icon: <FaCog />,
     href: '/services/construction',
     description: 'General construction & development'
   },
-  { 
-    label: 'Boiler Making', 
-    icon: <FaFire />, 
+  {
+    label: 'Fabrication',
+    icon: <FaFire />,
     href: '/services/boiler-making',
     description: 'Industrial boiler fabrication'
   },
-  { 
-    label: 'Welding', 
-    icon: <FaHammer />, 
+  
+  /*
+    {label: 'Welding',
+    icon: <FaHammer />,
     href: '/services/welding',
-    description: 'Professional welding services'
-  },
+    description: 'Professional welding services'}
+  */
 ];
 
 const navLinks = [
   { label: 'Home', icon: <FaHome />, href: '/' },
   { label: 'About Us', icon: <FaUserTie />, href: '/about' },
   { label: 'Projects', icon: <FaProjectDiagram />, href: '/projects' },
-  { label: 'Contact', icon: <FaEnvelope />, href: '/contact' },
+  { label: 'Contact', icon: <FaEnvelope />, href: '/contact' }
 ];
 
 export default function MobileNav({ setMenuOpen }: MobileNavProps) {
@@ -57,115 +58,107 @@ export default function MobileNav({ setMenuOpen }: MobileNavProps) {
     setIsClient(true);
   }, []);
 
-  if (!isClient) {
-    return null; // Don't render during SSR
-  }
+  if (!isClient) return null;
 
   return (
     <>
       {/* Backdrop */}
-      <div 
-        className="fixed inset-0 bg-black/60 z-40 md:hidden animate-fadeIn"
+      <div
+        className="fixed inset-0 bg-black/50 z-40 md:hidden"
         onClick={() => setMenuOpen(false)}
       />
-      
-      {/* Mobile Menu */}
-      <div className="bg-white fixed top-0 left-0 w-full h-full z-50 md:hidden animate-slideIn overflow-y-auto">
-        {/* Header with logo and close button */}
-        <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 bg-blue-50">
-          <div className="flex items-center">
-            
-            <img 
-              src="/Crestlyy3.png"
-              alt="Crestly Logo"
-              className="object-contain h-10 xs:h-12 sm:h-14 w-auto max-w-[140px]"
-            />
-          </div>
-          <button 
+
+      {/* Mobile Sidebar Menu */}
+      <div className="fixed top-0 left-0 h-full w-[80%] bg-white/80 backdrop-blur-xl shadow-xl z-50 rounded-r-xl transition-all duration-300 overflow-y-auto animate-slideIn md:hidden">
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-white/80">
+          <img
+            src="/Artboard-1@4x.png"
+            alt="Crestly Logo"
+            className="h-10 object-contain"
+          />
+          <button
             onClick={() => setMenuOpen(false)}
-            aria-label="Close menu"
-            className="text-blue-900 text-2xl p-2 hover:text-blue-700 hover:bg-blue-100 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="text-blue-900 text-2xl p-2 hover:text-blue-700 hover:bg-blue-100 rounded-full transition"
           >
             <FaTimes />
           </button>
         </div>
 
-        {/* Navigation Links */}
-        <nav className="p-4 xs:p-6">
-          <div className="space-y-1 xs:space-y-2">
-            {/* Regular Nav Links */}
+        {/* Navigation */}
+        <nav className="px-4 py-5">
+          <div className="space-y-3">
             {navLinks.map(({ label, icon, href }, i) => (
-  <Link
-    key={i}
-    onClick={() => setMenuOpen(false)}
-    href={href}
-    prefetch={false}
-    className="flex items-center gap-3 xs:gap-4 text-base xs:text-lg text-blue-900 hover:text-blue-700 font-medium px-3 xs:px-4 py-3 xs:py-4 rounded-lg transition-all duration-200 hover:bg-blue-50 border border-transparent hover:border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
-  >
-    <span className="text-lg xs:text-xl text-blue-600">{icon}</span>
-    {label}
-  </Link>
-))}
-            
-            {/* Business Units Expandable Section */}
-            <div className="border border-gray-200 rounded-lg overflow-hidden">
-              {/* Business Units Header */}
+              <Link
+                key={i}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-3 text-base text-blue-900 hover:text-blue-700 hover:bg-blue-100 px-4 py-3 rounded-lg transition font-medium"
+              >
+                <span className="text-lg text-blue-600">{icon}</span>
+                {label}
+              </Link>
+            ))}
+
+            {/* Expandable Services */}
+            <div className="bg-white/70 border border-gray-200 rounded-xl">
               <button
                 onClick={() => setServicesExpanded(!servicesExpanded)}
-                className="w-full flex items-center justify-between gap-3 xs:gap-4 text-base xs:text-lg text-blue-900 hover:text-blue-700 font-medium px-3 xs:px-4 py-3 xs:py-4 transition-all duration-200 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                aria-expanded={servicesExpanded}
+                className="w-full flex justify-between items-center px-4 py-3 text-blue-900 font-medium hover:bg-blue-100 transition rounded-t-xl"
               >
-                <div className="flex items-center gap-3 xs:gap-4">
-                  <span className="text-lg xs:text-xl text-blue-600">
+                <div className="flex items-center gap-3">
+                  <span className="text-lg text-blue-600">
                     <FaBuilding />
                   </span>
                   Business Units
                 </div>
-                <FaChevronDown 
-                  className={`text-sm transition-transform duration-300 ${
+                <FaChevronDown
+                  className={`transition-transform duration-300 ${
                     servicesExpanded ? 'rotate-180' : ''
                   }`}
                 />
               </button>
 
-              {/* Services Dropdown Content */}
-              {servicesExpanded && (
-                <div className="service-dropdown bg-gray-50 border-t border-gray-200 transform-origin-top transition-transform duration-300">
+              {/* Dropdown */}
+              <div
+                className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${
+                  servicesExpanded ? 'max-h-[1000px]' : 'max-h-0'
+                }`}
+              >
+                <div className="flex flex-col gap-1 bg-white/90 backdrop-blur">
                   {services.map(({ label, icon, href, description }, i) => (
                     <Link
                       key={i}
                       href={href}
-                      prefetch={false}
                       onClick={() => setMenuOpen(false)}
-                      className="flex items-start gap-3 px-6 xs:px-8 py-3 xs:py-4 text-blue-900 hover:text-blue-700 hover:bg-blue-50 transition-all duration-200 border-l-4 border-transparent hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
+                      className="flex gap-3 px-6 py-3 text-blue-900 hover:text-blue-700 hover:bg-blue-50 transition rounded"
                     >
-                      <span className="text-base text-blue-600 mt-0.5">{icon}</span>
-                      <div className="flex-1">
-                        <div className="font-medium text-sm xs:text-base">{label}</div>
-                        <div className="text-xs xs:text-sm text-gray-600 mt-0.5">{description}</div>
+                      <span className="text-blue-600 mt-1 text-base">{icon}</span>
+                      <div>
+                        <div className="font-medium text-sm">{label}</div>
+                        <div className="text-xs text-gray-600">{description}</div>
                       </div>
                     </Link>
                   ))}
-                  {/* View All Services Link */}
-                  <div className="px-6 xs:px-8 py-2 xs:py-3 border-t border-gray-200">
+                  {/*<div className="px-6 py-2 border-t border-gray-200">
                     <Link
                       href="/services"
                       onClick={() => setMenuOpen(false)}
-                      className="text-xs xs:text-sm text-blue-600 hover:text-blue-700 font-medium hover:underline transition-all duration-200"
+                      className="text-xs text-blue-600 hover:text-blue-700 font-medium hover:underline transition"
                     >
                       View all services →
                     </Link>
-                  </div>
+                  </div>*/}
                 </div>
-              )}
+              </div>
             </div>
           </div>
-          
-          {/* CTA Button in mobile menu */}
-          <div className="mt-6 xs:mt-8 pt-4 xs:pt-6 border-t border-gray-200">
-            <button 
+
+          {/* CTA Button */}
+          <div className="mt-6 pt-4 border-t border-gray-200">
+            <button
               onClick={() => setMenuOpen(false)}
-              className="w-full bg-blue-900 text-white px-4 xs:px-6 py-2.5 xs:py-3 rounded-lg font-semibold hover:bg-blue-800 transition-all duration-200 shadow-md text-base xs:text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full bg-blue-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-800 transition shadow-md text-base"
             >
               Get In Touch »
             </button>
