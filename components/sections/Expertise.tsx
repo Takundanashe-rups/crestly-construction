@@ -17,7 +17,7 @@ const EXPERTISE_CARDS = [
       'Our welding team delivers precision and strength for all your structural and fabrication needs. We use industry-leading techniques and equipment to guarantee safety and durability.',
     image: '/images/wielding.webp',
     cta: 'Read More',
-    ctaHref: '/services/welding',
+    ctaHref: '/services/boiler-making',
   },
   {
     title: 'Boiler Making',

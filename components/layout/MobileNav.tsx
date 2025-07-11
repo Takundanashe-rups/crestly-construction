@@ -156,12 +156,14 @@ export default function MobileNav({ setMenuOpen }: MobileNavProps) {
 
           {/* CTA Button */}
           <div className="mt-6 pt-4 border-t border-gray-200">
-            <button
-              onClick={() => setMenuOpen(false)}
-              className="w-full bg-blue-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-800 transition shadow-md text-base"
-            >
-              Get In Touch »
-            </button>
+                    
+            <Link 
+  href="/contact"
+  onClick={() => setMenuOpen(false)}
+  className="w-full bg-blue-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-800 transition shadow-md text-base block text-center"
+>
+  Get In Touch »
+</Link>
           </div>
         </nav>
       </div>
