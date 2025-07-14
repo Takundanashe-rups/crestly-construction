@@ -137,11 +137,11 @@ export default function ContactPage() {
               >
                 {submitting ? (
                   <>
-                    <FaSpinner className="animate-spin" /> Sending...
+                    <FaSpinner className="animate-spin text-yellow-600" /> Sending...
                   </>
                 ) : (
                   <>
-                    <FaHardHat /> Send Message
+                    <FaHardHat className="text-yellow-600" /> Send Message
                   </>
                 )}
               </button>
@@ -152,7 +152,7 @@ export default function ContactPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="flex items-center justify-center gap-2 text-green-600 font-medium mt-4 p-3 bg-green-50 rounded-lg border border-green-200"
                 >
-                  <FaCheckCircle className="text-lg" />
+                  <FaCheckCircle className="text-lg text-yellow-600" />
                   Message sent successfully!
                 </motion.div>
               )}
@@ -170,24 +170,24 @@ export default function ContactPage() {
 
             <div className="space-y-8 text-sm text-slate-700">
               <div>
-                <h3 className="font-semibold text-blue-800 flex items-center gap-2 mb-3 text-base"><FaMapMarkerAlt /> Office Location</h3>
+                <h3 className="font-semibold text-blue-800 flex items-center gap-2 mb-3 text-base"><FaMapMarkerAlt className="text-yellow-600" /> Office Location</h3>
                 <p className="leading-relaxed">123 Construction Avenue<br />Industrial Park, Suite 456<br />Cityname, ST 12345</p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-blue-800 flex items-center gap-2 mb-3 text-base"><FaPhoneAlt /> Phone</h3>
+                <h3 className="font-semibold text-blue-800 flex items-center gap-2 mb-3 text-base"><FaPhoneAlt className="text-yellow-600" /> Phone</h3>
                 <p className="mb-2"><a href="tel:+15551234567" className="text-blue-700 hover:underline transition-colors">+1 (555) 123-4567</a></p>
                 <p><span className="font-semibold text-red-600">Emergency:</span> <a href="tel:+15557654321" className="text-blue-700 hover:underline transition-colors">+1 (555) 765-4321</a></p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-blue-800 flex items-center gap-2 mb-3 text-base"><FaEnvelope /> Email</h3>
+                <h3 className="font-semibold text-blue-800 flex items-center gap-2 mb-3 text-base"><FaEnvelope className="text-yellow-600" /> Email</h3>
                 <p className="mb-2"><a href="mailto:info@crestlyconstruction.com" className="text-blue-700 hover:underline transition-colors">info@crestlyconstruction.com</a></p>
                 <p><a href="mailto:sales@crestlyconstruction.com" className="text-blue-700 hover:underline transition-colors">sales@crestlyconstruction.com</a></p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-blue-800 flex items-center gap-2 mb-3 text-base"><FaClock /> Business Hours</h3>
+                <h3 className="font-semibold text-blue-800 flex items-center gap-2 mb-3 text-base"><FaClock className="text-yellow-600" /> Business Hours</h3>
                 <p className="mb-1">Mon – Fri: 8:00 AM – 6:00 PM</p>
                 <p>Sat – Sun: 9:00 AM – 1:00 PM</p>
               </div>
@@ -202,6 +202,15 @@ export default function ContactPage() {
                     loading="lazy"
                     style={{ border: 0 }}
                   />
+
+                {/*for real adress *src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d386.3215773378974!2d32.59690125659042!3d-19.0065825929912!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2szw!4v1752481457614!5m2!1sen!2szw"
+                    className="w-full h-full"
+                    loading="lazy"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                  /> */}
+
                 </div>
               </div>
             </div>

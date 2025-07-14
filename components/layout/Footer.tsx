@@ -42,7 +42,7 @@ export default function Footer() {
           {/* Column 1: Company Info */}
           <div>
             <Link href="/" className="inline-flex items-center gap-2 mb-3 md:mb-4 group">
-              <span className="inline-block bg-amber-400 rounded-full p-1 group-hover:scale-105 transition-transform">
+              <span className="inline-block text-yellow-600 rounded-full p-1 group-hover:scale-105 transition-transform">
                 <svg width="24" height="24" viewBox="0 0 28 28" fill="none" className="w-6 h-6 md:w-7 md:h-7">
                   <circle cx="14" cy="14" r="14" fill="#f59e0b" />
                   <path d="M8 20L14 8L20 20" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
@@ -57,17 +57,17 @@ export default function Footer() {
             </p>
             <div className="flex flex-col gap-1.5 md:gap-2 mt-2">
               <a href="tel:+263772000000" className="flex items-center gap-2 text-gray-300 hover:text-amber-400 transition-colors duration-200 text-sm">
-                <FaPhone className="text-amber-400 text-xs" /> +263 77 200 0000
+                <FaPhone className="text-yellow-600 text-xs" /> +263 77 200 0000
               </a>
               <a href="mailto:info@crestly.co.zw" className="flex items-center gap-2 text-gray-300 hover:text-amber-400 transition-colors duration-200 text-sm">
-                <FaEnvelope className="text-amber-400 text-xs" /> info@crestly.co.zw
+                <FaEnvelope className="text-yellow-600 text-xs" /> info@crestly.co.zw
               </a>
             </div>
           </div>
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 className="text-base md:text-lg font-semibold text-amber-400 mb-3 md:mb-4">Quick Links</h4>
+            <h4 className="text-lg md:text-xl font-bold text-amber-400 group-hover:text-amber-300 transition-colors duration-300 tracking-wide mb-3 md:mb-4">Quick Links</h4>
             <ul className="space-y-1.5 md:space-y-2 text-gray-300">
               {quickLinks.map((link, i) => (
                 <motion.li
@@ -86,7 +86,7 @@ export default function Footer() {
 
           {/* Column 3: Services */}
           <div>
-            <h4 className="text-base md:text-lg font-semibold text-amber-400 mb-3 md:mb-4">Our Services</h4>
+            <h4 className="text-lg md:text-xl font-bold text-amber-400 group-hover:text-amber-300 transition-colors duration-300 tracking-wide mb-3 md:mb-4">Our Services</h4>
             <ul className="space-y-1.5 md:space-y-2 text-gray-300">
               {services.map((service, i) => (
                 <motion.li
@@ -116,13 +116,13 @@ export default function Footer() {
           </button>
           <div className="flex gap-2 md:gap-3">
             <a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" className="hover:text-amber-400 transition p-1.5 md:p-2 rounded-full hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-amber-400">
-              <FaFacebookF className="w-4 h-4 md:w-5 md:h-5" />
+              <FaFacebookF className="w-4 h-4 md:w-5 md:h-5 text-yellow-600" />
             </a>
             <a href="https://twitter.com/" target="_blank" rel="noopener" aria-label="Twitter/X" className="hover:text-amber-400 transition p-1.5 md:p-2 rounded-full hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-amber-400">
-              <FaXTwitter className="w-4 h-4 md:w-5 md:h-5" />
+              <FaXTwitter className="w-4 h-4 md:w-5 md:h-5 text-yellow-600" />
             </a>
             <a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn" className="hover:text-amber-400 transition p-1.5 md:p-2 rounded-full hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-amber-400">
-              <FaLinkedinIn className="w-4 h-4 md:w-5 md:h-5" />
+              <FaLinkedinIn className="w-4 h-4 md:w-5 md:h-5 text-yellow-600" />
             </a>
           </div>
         </div>

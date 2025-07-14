@@ -8,7 +8,7 @@ import ProjectLayout from '@/components/projects/ProjectLayout';
 import { getAllProjects  } from '@/lib/projects';
 import { ProjectCategory } from '@/types/project';
 
-const PROJECTS_PER_PAGE = 6;
+const PROJECTS_PER_PAGE = 3;
 const categories: ProjectCategory[] = [
   'Construction',
   'Infrastructure',
@@ -114,20 +114,27 @@ function ProjectsList() {
           ))}
         </div>
         {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex justify-center mt-12 gap-2">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-              <button
-                key={p}
-                className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-lg ${p === page ? 'bg-black text-white' : 'bg-gray-200 text-gray-700'}`}
-                onClick={() => setPage(p)}
-                aria-current={p === page ? 'page' : undefined}
-              >
-                {p}
-              </button>
-            ))}
-          </div>
-        )}
+        <div className="flex justify-center mt-12 gap-2">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+            <button
+              key={p}
+              className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-lg ${p === page ? 'bg-black text-white' : 'bg-gray-200 text-gray-700'}`}
+              onClick={() => setPage(p)}
+              aria-current={p === page ? 'page' : undefined}
+            >
+              {p}
+            </button>
+          ))}
+          {/* Next Arrow */}
+          <button
+            className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-lg ${page === totalPages ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+            onClick={() => page < totalPages && setPage(page + 1)}
+            disabled={page === totalPages}
+            aria-label="Next page"
+          >
+            &gt;
+          </button>
+        </div>
       </section>
     </>
   );

@@ -6,65 +6,50 @@ import { Calendar, User, Folder, MessageSquare } from 'lucide-react';
 export default function ProjectCard({ project }: { project: Project }) {
   const metaItems = [
     {
-      icon: <Calendar className="w-4 h-4 inline-block mr-1 text-blue-500" />,
+      icon: <Calendar className="w-4 h-4 inline-block mr-1 text-yellow-600" />,
       text: new Date(project.date).toLocaleDateString()
     },
     {
-      icon: <User className="w-4 h-4 inline-block mr-1 text-blue-500" />,
+      icon: <User className="w-4 h-4 inline-block mr-1 text-yellow-600" />,
       text: project.author
     },
     {
-      icon: <Folder className="w-4 h-4 inline-block mr-1 text-blue-500" />,
+      icon: <Folder className="w-4 h-4 inline-block mr-1 text-yellow-600" />,
       text: project.category
     },
     {
-      icon: <MessageSquare className="w-4 h-4 inline-block mr-1 text-blue-500" />,
+      icon: <MessageSquare className="w-4 h-4 inline-block mr-1 text-yellow-600" />,
       text: project.comments.toString()
     },
   ];
 
   return (
-    <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border border-slate-200 hover:border-blue-400 group">
-      {/* Gallery Grid or Top Image */}
-      {project.gallery && project.gallery.length > 0 ? (
-        <div
-          className={`grid w-full h-48 md:h-64 ${
-            project.gallery.length === 1
-              ? 'grid-cols-1'
-              : project.gallery.length === 2
-              ? 'grid-cols-2'
-              : project.gallery.length === 3
-              ? 'grid-cols-3'
-              : 'grid-cols-2 grid-rows-2'
-          }`}
-        >
-          {project.gallery.slice(0, 4).map((img, idx) => (
-            <div key={idx} className="relative w-full h-full overflow-hidden">
-              <Image
-                src={img}
-                alt={`${project.title} gallery ${idx + 1}`}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105 group-hover:brightness-95"
-                sizes="(max-width: 768px) 100vw, 25vw"
-                priority={idx === 0}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
-          ))}
+    <div className="bg-white/90 backdrop-blur-md shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border-2 border-gray-300 hover:border-blue-400 group">
+      {/* Top Image Only - Improved */}
+      <div className="relative h-56 md:h-72 w-full overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200">
+        <Image
+          src={project.gallery && project.gallery.length > 0 ? project.gallery[0] : project.heroImage}
+          alt={project.title}
+          fill
+          className="object-cover object-center transition-all duration-500 ease-out group-hover:scale-110 group-hover:brightness-105 group-hover:contrast-105"
+          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          priority
+          quality={85}
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+        />
+        
+        {/* Enhanced overlay with subtle vignette */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        
+        {/* Corner vignette for better image framing */}
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/10 pointer-events-none"></div>
+        
+        {/* Optional: Category badge overlay */}
+        <div className="absolute top-4 left-4 bg-blue-600/90 backdrop-blur-sm text-white px-3 py-1 text-xs font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+          {project.category}
         </div>
-      ) : (
-        <div className="relative h-48 md:h-64 w-full overflow-hidden">
-          <Image
-            src={project.heroImage}
-            alt={project.title}
-            fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, 50vw"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </div>
-      )}
+      </div>
 
       {/* Content */}
       <div className="flex flex-col md:flex-row items-start">

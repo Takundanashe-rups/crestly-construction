@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronDown, FaChevronUp, FaArrowRight, FaTools, FaIndustry, FaCog, FaShieldAlt } from 'react-icons/fa';
 import Link from 'next/link';
+import CallToAction from '../../../components/sections/CallToAction';
+
 
 const services = {
   Fabrication: {
@@ -25,13 +27,12 @@ const services = {
     ],
     color: "from-blue-600 to-blue-700"
   },
-  Installation: {
+  Rigging: {
     icon: FaCog,
     items: [
-      "Steel Structure Erection",
-      "Metal Part Installation",
-      "Maintenance & Inspection",
-      "Boiler System Integration"
+      "Inspection",
+      "Maintenance of lifting equipment ",
+      "Installation" 
     ],
     color: "from-blue-400 to-blue-500"
   },
@@ -257,47 +258,8 @@ export default function BoilerMakingPage() {
           </div>
         </div>
       </section>
-
-      {/* Features Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 via-slate-100 to-white">
-        <div className="container mx-auto max-w-6xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-blue-900 mb-4">
-              Industry-Leading <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-600">Standards</span>
-            </h2>
-          </motion.div>
-
-
-
-          {/*<div className="grid md:grid-cols-3 gap-8">
-            {[
-              { title: "Certified Professionals", desc: "All our technicians are certified and experienced in industrial boiler systems" },
-              { title: "Quality Assurance", desc: "Rigorous testing and inspection processes ensure the highest quality standards" },
-              { title: "24/7 Support", desc: "Round-the-clock support for emergency repairs and maintenance services" }
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center p-6 rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all duration-300"
-              >
-                <h3 className="text-xl font-bold text-blue-900 mb-3">{feature.title}</h3>
-                <p className="text-gray-700">{feature.desc}</p>
-              </motion.div>
-            ))}
-          </div> */}
-
-          
-        </div>
-      </section>
+      
+      <CallToAction />
     </div>
   );
 }

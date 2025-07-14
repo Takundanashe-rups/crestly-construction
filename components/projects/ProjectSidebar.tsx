@@ -44,7 +44,7 @@ export default function ProjectSidebar() {
     <aside className="space-y-10 text-slate-800">
       {/* Text Widget */}
       <div className="bg-gradient-to-br from-blue-50 to-slate-100 rounded-xl p-5 border border-slate-200 shadow-sm">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-blue-700 mb-3">About Us</h3>
+        <h3 className="text-sm font-bold uppercase tracking-widest text-gray-600 mb-3">About Us</h3>
         <p className="text-sm leading-relaxed text-slate-700">
           We bring ideas to life through strong architectural design, structural precision, and industry-grade construction practices. From blueprint to reality, we deliver quality you can trust.
         </p>
@@ -52,7 +52,7 @@ export default function ProjectSidebar() {
 
       {/* Recent Projects */}
       <div className="bg-gradient-to-br from-white via-blue-50 to-slate-100 rounded-xl p-5 border border-slate-200 shadow-sm">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-blue-700 mb-4">Recent Works</h3>
+        <h3 className="text-sm font-bold uppercase tracking-widest text-gray-600 mb-4">Recent Works</h3>
         <div className="grid grid-cols-3 gap-2">
           {recentProjects.map((project) => (
             <Link key={project.id} href={`/projects/${project.slug}`}>
@@ -75,7 +75,7 @@ export default function ProjectSidebar() {
 
       {/* Recent Comments */}
       <div className="bg-gradient-to-br from-blue-50 to-slate-100 rounded-xl p-5 border border-slate-200 shadow-sm">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-blue-700 mb-4">Recent Comments</h3>
+        <h3 className="text-sm font-bold uppercase tracking-widest text-gray-600 mb-4">Recent Comments</h3>
         <ul className="space-y-2 text-sm text-slate-700">
           {recentComments.map((comment, idx) => (
             <li key={idx}>
@@ -94,7 +94,7 @@ export default function ProjectSidebar() {
 
       {/* Tag Cloud */}
       <div className="bg-gradient-to-br from-white via-blue-50 to-slate-100 rounded-xl p-5 border border-slate-200 shadow-sm">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-blue-700 mb-4">Tags</h3>
+        <h3 className="text-sm font-bold uppercase tracking-widest text-gray-600">Tags</h3>
         <div className="flex flex-wrap gap-2">
           {['Construction', 'Boiler-Making', 'Infrastructure', 'Renovation', 'Consultancy'].map(
             (tag, index) => (
