@@ -157,20 +157,7 @@ function Hero() {
           </motion.div>
 
           
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.4 }}
-          >
-            <Link href="/projects">
-              <button
-                className="bg-amber-600 hover:bg-amber-700 active:bg-amber-800 transition-colors duration-200 text-white font-medium py-2 px-5 sm:py-2.5 sm:px-6 md:py-3 md:px-8 rounded-md shadow-lg text-sm sm:text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transform hover:scale-105 active:scale-95"
-                aria-label="Explore Our Projects"
-              >
-                Explore Our Projects
-              </button>
-            </Link>
-          </motion.div>
+           
         </div>
       </div>
 

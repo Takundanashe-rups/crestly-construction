@@ -102,25 +102,7 @@ const WhyWorkWithUs = () => {
                   </div>
                 ))}
               </div>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Link
-                  href="/about"
-                  className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white py-3 px-6 rounded-lg font-medium transition-all duration-200 hover:scale-105 shadow"
-                >
-                  Discover More
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-                <Link
-                  href="/projects"
-                  className="inline-flex items-center justify-center border-2 border-amber-600 text-amber-600 hover:bg-amber-50 py-3 px-6 rounded-lg font-medium transition-all duration-200"
-                >
-                  View Projects
-                </Link>
-              </div>
+               
             </div>
           </div>
         </div>

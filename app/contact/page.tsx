@@ -6,6 +6,74 @@ import { FaCheckCircle, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaClock, FaHardH
 import Link from 'next/link';
 import CallToAction from '../../components/sections/CallToAction';
 
+function ContactHero() {
+  return (
+    <>
+      {/* Main Hero Container */}
+      <div className="relative h-[500px] w-full overflow-hidden">
+        
+        {/* Background Image */}
+        <div className="absolute inset-0 bg-[url('/images/contactus-banner.jpg')] bg-cover bg-center z-0" />
+        
+        {/* Gradient Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-15"></div>
+        
+        {/* Hero Content */}
+        <div className="relative z-20 flex flex-col items-start justify-center h-full px-6 lg:px-12 max-w-7xl mx-auto">
+          
+          {/* Subtitle */}
+          <motion.div 
+            className="text-blue-100 text-sm mb-4 font-semibold tracking-wider uppercase"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            &raquo; Get In Touch
+          </motion.div>
+          
+          {/* Main Title */}
+          <motion.h1 
+            className="text-5xl md:text-7xl font-bold text-white leading-tight max-w-4xl"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Contact Us
+          </motion.h1>
+          
+          {/* Description */}
+          <motion.p 
+            className="text-xl text-blue-100 mt-6 max-w-2xl leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            Planning a project or have questions? We're here to help you bring your construction vision to life with expert guidance and support.
+          </motion.p>
+          
+          {/* Breadcrumb Navigation */}
+          <motion.div 
+            className="flex items-center gap-2 text-blue-200 mt-8 text-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.6 }}
+          >
+            <span className="hover:text-white transition-colors cursor-pointer">Home</span>
+            <span>&raquo;</span>
+            <span className="text-white">Contact Us</span>
+          </motion.div>
+        </div>
+        
+        {/* Decorative Floating Elements */}
+        <div className="absolute top-20 right-20 w-32 h-32 bg-blue-400/10 rounded-full blur-xl animate-pulse hidden lg:block"></div>
+        <div className="absolute bottom-20 right-40 w-24 h-24 bg-white/5 rounded-full blur-lg animate-pulse hidden lg:block"></div>
+      </div>
+      
+    </>
+  );
+}
+
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', honey: '' });
   const [errors, setErrors] = useState<{ name?: string; email?: string; subject?: string; message?: string }>({});
@@ -49,27 +117,7 @@ export default function ContactPage() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-white via-blue-50 to-slate-100">
-      {/* Hero Section - matching boiler-making page height */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/60 via-black/40 to-black/80 md:from-black/70 md:via-black/50 md:to-black/90" />
-        <div className="absolute inset-0 bg-[url('/images/contactus-banner.jpg')] bg-cover bg-center" />
-
-        <div className="relative z-20 container mx-auto px-4 py-24 md:py-32 flex items-center justify-center min-h-[400px]">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-2xl">
-              Contact Us  
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed drop-shadow-lg font-medium">
-              Home » Contact Us
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <ContactHero />
 
       {/* Main Content Section with proper spacing */}
       <div className="py-20 md:py-24 lg:py-32 px-6">
