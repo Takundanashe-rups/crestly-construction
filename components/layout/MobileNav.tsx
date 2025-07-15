@@ -72,10 +72,17 @@ export default function MobileNav({ setMenuOpen }: MobileNavProps) {
       <div className="fixed top-0 left-0 h-full w-[80%] bg-white/80 backdrop-blur-xl shadow-xl z-50 rounded-r-xl transition-all duration-300 overflow-y-auto animate-slideIn md:hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-white/80">
+          {/* Light mode logo */}
           <img
             src="/Artboard-1@4x.png"
             alt="Crestly Logo"
-            className="h-10 object-contain"
+            className="h-10 object-contain block dark:hidden"
+          />
+          {/* Dark mode logo */}
+          <img
+            src="/Artboard-1@4x.png"
+            alt="Crestly Logo (dark)"
+            className="h-10 object-contain hidden dark:block"
           />
           <button
             onClick={() => setMenuOpen(false)}

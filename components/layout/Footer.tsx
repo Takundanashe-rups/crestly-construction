@@ -23,13 +23,13 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#0f172a] text-white text-sm mt-8 md:mt-16 shadow-inner rounded-t-2xl overflow-hidden">
+    <footer className="bg-[#0f172a] text-white text-sm shadow-inner overflow-hidden">
       {/* Main Animated Section */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="bg-[#1e293b] py-6 md:py-12 px-4 md:px-16 rounded-t-2xl shadow-inner"
+        className="bg-[#1e293b] py-6 md:py-12 px-4 md:px-16 shadow-inner"
       >
         {/* Decorative SVG Wave Divider - Hidden on mobile */}
         <div aria-hidden="true" className="hidden md:block -mt-12 md:-mt-16">
@@ -43,10 +43,7 @@ export default function Footer() {
           <div>
             <Link href="/" className="inline-flex items-center gap-2 mb-3 md:mb-4 group">
               <span className="inline-block text-yellow-600 rounded-full p-1 group-hover:scale-105 transition-transform">
-                <svg width="24" height="24" viewBox="0 0 28 28" fill="none" className="w-6 h-6 md:w-7 md:h-7">
-                  <circle cx="14" cy="14" r="14" fill="#f59e0b" />
-                  <path d="M8 20L14 8L20 20" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-                </svg>
+                <img src="/Artboard.2@4x.png" alt="Crestly Construction Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain rounded-full bg-white p-0.5" />
               </span>
               <h3 className="text-lg md:text-xl font-bold text-amber-400 group-hover:text-amber-300 transition-colors duration-300 tracking-wide">
                 Crestly Construction

@@ -42,7 +42,7 @@ export default function Navbar() {
   // Render loading state during hydration
   if (!isClient) {
     return (
-      <nav className="bg-white shadow-md px-4 md:px-8 py-2 md:py-3 flex items-center justify-between w-full relative z-50">
+      <nav className="sticky top-0 bg-white shadow-md px-4 md:px-8 py-2 md:py-3 flex items-center justify-between w-full relative z-50">
         <div className="flex items-center flex-shrink-0">
           <Link href="/" className="relative logo-container group">
             <Image 
@@ -69,16 +69,26 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="bg-white shadow-md px-4 md:px-8 py-2 md:py-3 flex items-center justify-between w-full relative z-50">
+      <nav className="sticky top-0 bg-white shadow-md px-4 md:px-8 py-2 md:py-3 flex items-center justify-between w-full relative z-50">
         {/* Logo */}
         <div className="flex items-center flex-shrink-0">
           <Link href="/" className="relative logo-container group">
+            {/* Light mode logo */}
             <Image 
               src="/Artboard-1@4x.png" 
               alt="Crestly Construction Logo" 
               width={64}
               height={64}
-              className="h-16 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+              className="h-16 w-auto object-contain transition-transform duration-200 group-hover:scale-105 block dark:hidden"
+              priority
+            />
+            {/* Dark mode logo */}
+            <Image 
+              src="/Artboard-1@4x.png" 
+              alt="Crestly Construction Logo (dark)" 
+              width={64}
+              height={64}
+              className="h-16 w-auto object-contain transition-transform duration-200 group-hover:scale-105 hidden dark:block"
               priority
             />
             <div className="absolute inset-0 bg-blue-900/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 -z-10"></div>

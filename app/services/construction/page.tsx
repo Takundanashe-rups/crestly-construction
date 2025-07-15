@@ -1,6 +1,17 @@
 'use client';
 import React from 'react';
-import { FaTools, FaPencilRuler, FaDraftingCompass, FaHardHat, FaHammer, FaRedo, FaComments, FaCogs } from 'react-icons/fa';
+import {
+  FaTools,
+  FaPencilRuler,
+  FaDraftingCompass,
+  FaHardHat,
+  FaHammer,
+  FaRedo,
+  FaComments,
+  FaCogs,
+  FaLayerGroup,
+  FaHome,
+} from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import CallToAction from '../../../components/sections/CallToAction';
 
@@ -10,6 +21,8 @@ const services = [
   { icon: <FaTools className="text-yellow-600 text-3xl" />, title: 'Plan Drawing', description: 'Accurate technical drawings for construction and regulatory compliance.' },
   { icon: <FaHardHat className="text-yellow-600 text-3xl" />, title: 'Bricklaying', description: 'Expert bricklayers delivering durable and precise masonry work.' },
   { icon: <FaHammer className="text-yellow-600 text-3xl" />, title: 'Construction', description: 'Full-scale construction for residential, commercial, and industrial projects.' },
+  { icon: <FaLayerGroup className="text-yellow-600 text-3xl" />, title: 'Tiling', description: 'Professional floor, pavement, and wall tiling for a polished finish.' },
+  { icon: <FaHome className="text-yellow-600 text-3xl" />, title: 'Roofing', description: 'Complete roofing solutions from installation to repair and maintenance.' },
   { icon: <FaRedo className="text-yellow-600 text-3xl" />, title: 'Renovations', description: 'Revamp and modernize spaces with minimal disruption and expert care.' },
   { icon: <FaComments className="text-yellow-600 text-3xl" />, title: 'Consultancy', description: 'Professional guidance to navigate permits, budgets, and timelines.' },
   { icon: <FaCogs className="text-yellow-600 text-3xl" />, title: 'Other Services', description: 'We handle all related construction activities tailored to your goals.' },
@@ -21,7 +34,7 @@ export default function ConstructionServices() {
       {/* Hero Section - matching boiler-making page height */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/60 via-black/40 to-black/80 md:from-black/70 md:via-black/50 md:to-black/90" />
-        <div className="absolute inset-0 bg-[url('/images/contactus-banner.jpg')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-[url('/images/constructionn.jpg')] bg-cover bg-center" />
 
         <div className="relative z-20 container mx-auto px-4 py-24 md:py-32 flex items-center justify-center min-h-[400px]">
           <motion.div
