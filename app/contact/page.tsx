@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaCheckCircle, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaClock, FaHardHat, FaSpinner } from 'react-icons/fa';
 import Link from 'next/link';
+import CallToAction from '../../components/sections/CallToAction';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', honey: '' });
