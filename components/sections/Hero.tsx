@@ -15,7 +15,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(require('clsx')(inputs));
 }
 
-// ImagesSlider component
+// ImagesSlider component - Fixed to not block UI
 export const ImagesSlider = React.memo(({
   images,
   children,
@@ -34,7 +34,7 @@ export const ImagesSlider = React.memo(({
   direction?: 'up' | 'down';
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [loadedImages, setLoadedImages] = useState<string[]>([]);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
 
   // Memoize handlers
   const handleNext = useCallback(() => {
@@ -49,23 +49,42 @@ export const ImagesSlider = React.memo(({
     );
   }, [images.length]);
 
-  // Preload images only once
+  // Preload images progressively - don't block UI
   useEffect(() => {
     let isMounted = true;
-    const loadPromises = images.map((image) => {
-      return new Promise((resolve, reject) => {
-        const img = new window.Image();
-        img.src = image;
-        img.onload = () => resolve(image);
-        img.onerror = reject;
-      });
+    
+    // Load first image immediately for faster initial render
+    const loadImage = (src: string) => {
+      const img = new window.Image();
+      img.src = src;
+      img.onload = () => {
+        if (isMounted) {
+          setLoadedImages(prev => new Set([...prev, src]));
+        }
+      };
+      img.onerror = () => {
+        console.warn(`Failed to load image: ${src}`);
+      };
+    };
+
+    // Load first image immediately
+    if (images[0]) {
+      loadImage(images[0]);
+    }
+
+    // Load remaining images with slight delay to not block UI
+    const timeouts = images.slice(1).map((image, index) => {
+      return setTimeout(() => {
+        if (isMounted) {
+          loadImage(image);
+        }
+      }, (index + 1) * 100); // Stagger loading
     });
-    Promise.all(loadPromises)
-      .then((loadedImages) => {
-        if (isMounted) setLoadedImages(loadedImages as string[]);
-      })
-      .catch((error) => console.error('Failed to load images', error));
-    return () => { isMounted = false; };
+
+    return () => {
+      isMounted = false;
+      timeouts.forEach(clearTimeout);
+    };
   }, [images]);
 
   // Keyboard and autoplay
@@ -77,18 +96,21 @@ export const ImagesSlider = React.memo(({
         handlePrevious();
       }
     };
+    
     window.addEventListener('keydown', handleKeyDown);
-    let interval: any;
-    if (autoplay) {
+    
+    let interval: NodeJS.Timeout;
+    if (autoplay && loadedImages.size > 0) {
       interval = setInterval(() => {
         handleNext();
       }, 9000);
     }
+    
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      clearInterval(interval);
+      if (interval) clearInterval(interval);
     };
-  }, [autoplay, handleNext, handlePrevious]);
+  }, [autoplay, handleNext, handlePrevious, loadedImages.size]);
 
   // Memoize slideVariants
   const slideVariants = useMemo(() => ({
@@ -116,7 +138,7 @@ export const ImagesSlider = React.memo(({
     },
   }), []);
 
-  const areImagesLoaded = loadedImages.length > 0;
+  const currentImageLoaded = loadedImages.has(images[currentIndex]);
 
   return (
     <div
@@ -128,36 +150,48 @@ export const ImagesSlider = React.memo(({
         perspective: '1000px',
       }}
     >
-      {areImagesLoaded && children}
-      {areImagesLoaded && overlay && (
+      {/* Always render children - don't wait for images */}
+      {children}
+      
+      {/* Always render overlay - don't wait for images */}
+      {overlay && (
         <div
           className={cn('absolute inset-0 bg-black/60 z-40', overlayClassName)}
         />
       )}
-      {areImagesLoaded && (
-        <AnimatePresence>
-          <motion.div
-            key={currentIndex}
-            initial="initial"
-            animate="visible"
-            exit={direction === 'up' ? 'upExit' : 'downExit'}
-            variants={slideVariants}
-            className="image h-full w-full absolute inset-0"
-            style={{ position: 'absolute', inset: 0 }}
-          >
+      
+      {/* Fallback background while images load */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-800 via-slate-700 to-slate-900" />
+      
+      {/* Render current image if loaded, otherwise show fallback */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentIndex}
+          initial="initial"
+          animate="visible"
+          exit={direction === 'up' ? 'upExit' : 'downExit'}
+          variants={slideVariants}
+          className="image h-full w-full absolute inset-0"
+        >
+          {currentImageLoaded ? (
             <Image
-              src={loadedImages[currentIndex]}
+              src={images[currentIndex]}
               alt=""
               fill
               style={{ objectFit: 'cover', objectPosition: 'center' }}
               priority={currentIndex === 0}
+              quality={75}
             />
-          </motion.div>
-        </AnimatePresence>
-      )}
+          ) : (
+            <div className="w-full h-full bg-gradient-to-b from-slate-800 via-slate-700 to-slate-900" />
+          )}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 });
+
+ImagesSlider.displayName = 'ImagesSlider';
 
 const backgroundImages: string[] = [
   '/images/back-2.jpg',
