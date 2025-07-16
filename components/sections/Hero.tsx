@@ -1,203 +1,16 @@
 'use client';
 
-import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Typewriter } from 'react-simple-typewriter';
 import Image from 'next/image';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import Link from 'next/link';
-import { AnimatePresence } from 'framer-motion';
-
-// cn utility
-import { ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(require('clsx')(inputs));
-}
-
-// ImagesSlider component - Fixed to not block UI
-export const ImagesSlider = React.memo(({
-  images,
-  children,
-  overlay = true,
-  overlayClassName,
-  className,
-  autoplay = true,
-  direction = 'up',
-}: {
-  images: string[];
-  children: React.ReactNode;
-  overlay?: React.ReactNode;
-  overlayClassName?: string;
-  className?: string;
-  autoplay?: boolean;
-  direction?: 'up' | 'down';
-}) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
-
-  // Memoize handlers
-  const handleNext = useCallback(() => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex + 1 === images.length ? 0 : prevIndex + 1
-    );
-  }, [images.length]);
-
-  const handlePrevious = useCallback(() => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1
-    );
-  }, [images.length]);
-
-  // Preload images progressively - don't block UI
-  useEffect(() => {
-    let isMounted = true;
-    
-    // Load first image immediately for faster initial render
-    const loadImage = (src: string) => {
-      const img = new window.Image();
-      img.src = src;
-      img.onload = () => {
-        if (isMounted) {
-          setLoadedImages(prev => new Set([...prev, src]));
-        }
-      };
-      img.onerror = () => {
-        console.warn(`Failed to load image: ${src}`);
-      };
-    };
-
-    // Load first image immediately
-    if (images[0]) {
-      loadImage(images[0]);
-    }
-
-    // Load remaining images with slight delay to not block UI
-    const timeouts = images.slice(1).map((image, index) => {
-      return setTimeout(() => {
-        if (isMounted) {
-          loadImage(image);
-        }
-      }, (index + 1) * 100); // Stagger loading
-    });
-
-    return () => {
-      isMounted = false;
-      timeouts.forEach(clearTimeout);
-    };
-  }, [images]);
-
-  // Keyboard and autoplay
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowRight') {
-        handleNext();
-      } else if (event.key === 'ArrowLeft') {
-        handlePrevious();
-      }
-    };
-    
-    window.addEventListener('keydown', handleKeyDown);
-    
-    let interval: NodeJS.Timeout;
-    if (autoplay && loadedImages.size > 0) {
-      interval = setInterval(() => {
-        handleNext();
-      }, 9000);
-    }
-    
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      if (interval) clearInterval(interval);
-    };
-  }, [autoplay, handleNext, handlePrevious, loadedImages.size]);
-
-  // Memoize slideVariants
-  const slideVariants = useMemo(() => ({
-    initial: {
-      opacity: 0,
-    },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.7,
-        ease: [0.645, 0.045, 0.355, 1.0] as any,
-      },
-    },
-    upExit: {
-      opacity: 0,
-      transition: {
-        duration: 0.7,
-      },
-    },
-    downExit: {
-      opacity: 0,
-      transition: {
-        duration: 0.7,
-      },
-    },
-  }), []);
-
-  const currentImageLoaded = loadedImages.has(images[currentIndex]);
-
-  return (
-    <div
-      className={cn(
-        'overflow-hidden h-full w-full relative flex items-center justify-center',
-        className
-      )}
-      style={{
-        perspective: '1000px',
-      }}
-    >
-      {/* Always render children - don't wait for images */}
-      {children}
-      
-      {/* Always render overlay - don't wait for images */}
-      {overlay && (
-        <div
-          className={cn('absolute inset-0 bg-black/60 z-40', overlayClassName)}
-        />
-      )}
-      
-      {/* Fallback background while images load */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-800 via-slate-700 to-slate-900" />
-      
-      {/* Render current image if loaded, otherwise show fallback */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentIndex}
-          initial="initial"
-          animate="visible"
-          exit={direction === 'up' ? 'upExit' : 'downExit'}
-          variants={slideVariants}
-          className="image h-full w-full absolute inset-0"
-        >
-          {currentImageLoaded ? (
-            <Image
-              src={images[currentIndex]}
-              alt=""
-              fill
-              style={{ objectFit: 'cover', objectPosition: 'center' }}
-              priority={currentIndex === 0}
-              quality={75}
-            />
-          ) : (
-            <div className="w-full h-full bg-gradient-to-b from-slate-800 via-slate-700 to-slate-900" />
-          )}
-        </motion.div>
-      </AnimatePresence>
-    </div>
-  );
-});
-
-ImagesSlider.displayName = 'ImagesSlider';
 
 const backgroundImages: string[] = [
+  '/images/back-1.jpg',
   '/images/back-2.jpg',
   '/images/back-3.jpg',
   '/images/back-5.jpg',
-  '/images/back-1.jpg',
 ];
 
 const HeroWithBoundary = () => (
@@ -241,7 +54,7 @@ function Hero() {
     }, INTERVAL);
   };
 
-  // Auto-slide functionality - Fixed TypeScript error
+  // Auto-slide functionality
   useEffect(() => {
     startInterval();
     return () => {
@@ -267,11 +80,45 @@ function Hero() {
 
   return (
     <section className="relative h-[60vh] sm:h-[70vh] md:h-[60vh] lg:h-[60vh] min-h-[320px] sm:min-h-[400px] max-h-[600px] w-full overflow-hidden">
-      {/* Use ImagesSlider for background */}
-      <ImagesSlider images={backgroundImages} autoplay direction="up" className="absolute inset-0 z-0" >
-        {/* Overlay */}
-        <div className="absolute inset-0 z-5 bg-gradient-to-b from-black/40 via-black/30 to-black/50 md:from-black/60 md:via-black/40 md:to-black/60 lg:from-black/70 lg:via-black/50 lg:to-black/70" />
-      </ImagesSlider>
+      
+      {/* Background with smooth crossfade */}
+      <div className="absolute inset-0 z-0">
+        {/* Fallback background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-800 via-slate-700 to-slate-900" />
+        
+        {/* Current Image (base layer) */}
+        <div className="absolute inset-0">
+          <Image
+            src={backgroundImages[currentIndex]}
+            alt="Hero background"
+            fill
+            className="object-cover object-center"
+            quality={isMobile ? 60 : 85}
+            sizes="100vw"
+            priority
+          />
+        </div>
+        
+        {/* Next Image (overlay layer that fades in) */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            isTransitioning ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <Image
+            src={backgroundImages[nextIndex]}
+            alt="Next hero background"
+            fill
+            className="object-cover object-center"
+            quality={isMobile ? 60 : 85}
+            sizes="100vw"
+          />
+        </div>
+      </div>
+
+      {/* Overlay */}
+      <div className="absolute inset-0 z-5 bg-gradient-to-b from-black/40 via-black/30 to-black/50 md:from-black/60 md:via-black/40 md:to-black/60 lg:from-black/70 lg:via-black/50 lg:to-black/70" />
+
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-3 sm:px-4 md:px-6 lg:px-12">
         <div className="max-w-4xl w-full text-center">
@@ -319,6 +166,7 @@ function Hero() {
           </motion.div>
         </div>
       </div>
+
       {/* Slide Dots */}
       <div className="absolute bottom-3 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex space-x-2 sm:space-x-2.5">
         {backgroundImages.map((_, idx) => (
