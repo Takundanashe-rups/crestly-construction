@@ -7,10 +7,10 @@ import Image from 'next/image';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 const backgroundImages: string[] = [
-  '/images/back-1.jpg',
+  '/images/back-5.jpg',
   '/images/back-2.jpg',
   '/images/back-3.jpg',
-  '/images/back-5.jpg',
+  '/images/back-1.jpg',
 ];
 
 const HeroWithBoundary = () => (

@@ -266,7 +266,6 @@ export default function ContactPage() {
           </motion.div>
         </div>
       </div>
-      <CallToAction className="bg-gradient-to-br from-white via-blue-50 to-slate-100 dark:from-gray-900 dark:via-slate-900 dark:to-gray-950" />
-    </div>
+      </div>
   );
 }
