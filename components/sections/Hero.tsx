@@ -1,11 +1,161 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Typewriter } from 'react-simple-typewriter';
 import Image from 'next/image';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Link from 'next/link';
+import { AnimatePresence } from 'framer-motion';
+
+// cn utility
+import { ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(require('clsx')(inputs));
+}
+
+// ImagesSlider component
+export const ImagesSlider = React.memo(({
+  images,
+  children,
+  overlay = true,
+  overlayClassName,
+  className,
+  autoplay = true,
+  direction = 'up',
+}: {
+  images: string[];
+  children: React.ReactNode;
+  overlay?: React.ReactNode;
+  overlayClassName?: string;
+  className?: string;
+  autoplay?: boolean;
+  direction?: 'up' | 'down';
+}) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [loadedImages, setLoadedImages] = useState<string[]>([]);
+
+  // Memoize handlers
+  const handleNext = useCallback(() => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex + 1 === images.length ? 0 : prevIndex + 1
+    );
+  }, [images.length]);
+
+  const handlePrevious = useCallback(() => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1
+    );
+  }, [images.length]);
+
+  // Preload images only once
+  useEffect(() => {
+    let isMounted = true;
+    const loadPromises = images.map((image) => {
+      return new Promise((resolve, reject) => {
+        const img = new window.Image();
+        img.src = image;
+        img.onload = () => resolve(image);
+        img.onerror = reject;
+      });
+    });
+    Promise.all(loadPromises)
+      .then((loadedImages) => {
+        if (isMounted) setLoadedImages(loadedImages as string[]);
+      })
+      .catch((error) => console.error('Failed to load images', error));
+    return () => { isMounted = false; };
+  }, [images]);
+
+  // Keyboard and autoplay
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') {
+        handleNext();
+      } else if (event.key === 'ArrowLeft') {
+        handlePrevious();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    let interval: any;
+    if (autoplay) {
+      interval = setInterval(() => {
+        handleNext();
+      }, 9000);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      clearInterval(interval);
+    };
+  }, [autoplay, handleNext, handlePrevious]);
+
+  // Memoize slideVariants
+  const slideVariants = useMemo(() => ({
+    initial: {
+      scale: 0,
+      opacity: 0,
+      rotateX: 45,
+    },
+    visible: {
+      scale: 1,
+      rotateX: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: [0.645, 0.045, 0.355, 1.0] as any,
+      },
+    },
+    upExit: {
+      opacity: 1,
+      y: '-150%',
+      transition: {
+        duration: 1,
+      },
+    },
+    downExit: {
+      opacity: 1,
+      y: '150%',
+      transition: {
+        duration: 1,
+      },
+    },
+  }), []);
+
+  const areImagesLoaded = loadedImages.length > 0;
+
+  return (
+    <div
+      className={cn(
+        'overflow-hidden h-full w-full relative flex items-center justify-center',
+        className
+      )}
+      style={{
+        perspective: '1000px',
+      }}
+    >
+      {areImagesLoaded && children}
+      {areImagesLoaded && overlay && (
+        <div
+          className={cn('absolute inset-0 bg-black/60 z-40', overlayClassName)}
+        />
+      )}
+      {areImagesLoaded && (
+        <AnimatePresence>
+          <motion.img
+            key={currentIndex}
+            src={loadedImages[currentIndex]}
+            initial="initial"
+            animate="visible"
+            exit={direction === 'up' ? 'upExit' : 'downExit'}
+            variants={slideVariants}
+            className="image h-full w-full absolute inset-0 object-cover object-center"
+          />
+        </AnimatePresence>
+      )}
+    </div>
+  );
+});
 
 const backgroundImages: string[] = [
   '/images/back-1.jpg',
@@ -80,65 +230,41 @@ function Hero() {
   };
 
   return (
-    <section className="relative h-[70vh] sm:h-[80vh] md:h-[60vh] lg:h-[60vh] min-h-[400px] max-h-[700px] w-full overflow-hidden flex items-center justify-center">
-    
-      {/* Background with smooth crossfade */}
-      <div className="absolute inset-0 z-0">
-        {/* Fallback background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-800 via-slate-700 to-slate-900" />
-        
-        {/* Current Image (base layer) */}
-        <div className="absolute inset-0">
-          <Image
-            src={backgroundImages[currentIndex]}
-            alt="Hero background"
-            fill
-            className="object-cover object-center"
-            quality={isMobile ? 60 : 85}
-            sizes="100vw"
-            priority
-          />
-        </div>
-        
-        {/* Next Image (overlay layer that fades in) */}
-        <div 
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            isTransitioning ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <Image
-            src={backgroundImages[nextIndex]}
-            alt="Next hero background"
-            fill
-            className="object-cover object-center"
-            quality={isMobile ? 60 : 85}
-            sizes="100vw"
-          />
-        </div>
-      </div>
-
-      {/* Overlay */}
-      <div className="absolute inset-0 z-5 bg-gradient-to-b from-black/40 via-black/30 to-black/50 md:from-black/60 md:via-black/40 md:to-black/60 lg:from-black/70 lg:via-black/50 lg:to-black/70" />
-
+    <section className="relative h-[60vh] sm:h-[70vh] md:h-[60vh] lg:h-[60vh] min-h-[320px] sm:min-h-[400px] max-h-[600px] w-full overflow-hidden">
+      {/* Use ImagesSlider for background */}
+      <ImagesSlider images={backgroundImages} autoplay direction="up" className="absolute inset-0 z-0" >
+        {/* Overlay */}
+        <div className="absolute inset-0 z-5 bg-gradient-to-b from-black/40 via-black/30 to-black/50 md:from-black/60 md:via-black/40 md:to-black/60 lg:from-black/70 lg:via-black/50 lg:to-black/70" />
+      </ImagesSlider>
       {/* Content */}
-      <div className="relative z-10 text-white flex flex-col items-center justify-center h-full px-4 sm:px-6 md:px-8 text-center">
-        <div className="max-w-4xl px-2 sm:px-4">
-          <motion.h1
-            className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 leading-tight"
-            style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full px-3 sm:px-4 md:px-6 lg:px-12">
+        <div className="max-w-4xl w-full text-center">
+          {/* Subtitle */}
+          <motion.div 
+            className="text-blue-100 text-xs sm:text-sm mb-2 sm:mb-4 font-semibold tracking-wider uppercase"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
           >
-            Building Dreams, Crafting Realities
+            &raquo; Welcome to Crestly Construction
+          </motion.div>
+
+          <motion.h1
+            className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-2 sm:mb-4"
+            style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Building Dreams, <br className="block sm:hidden" />Crafting Realities
           </motion.h1>
 
           <motion.div
-            className="text-sm sm:text-lg md:text-xl lg:text-2xl font-light min-h-[2rem] sm:min-h-[2.5rem] mb-4 sm:mb-6"
+            className="text-base xs:text-lg sm:text-xl text-blue-100 mt-2 sm:mt-6 leading-relaxed"
             style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.7)' }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
           >
             <Typewriter
               words={[
@@ -155,23 +281,19 @@ function Hero() {
               delaySpeed={isMobile ? 2000 : 2500}
             />
           </motion.div>
-
-          
-           
         </div>
       </div>
-
       {/* Slide Dots */}
-      <div className="absolute bottom-3 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-10 hidden xs:flex space-x-1.5 sm:space-x-2">
+      <div className="absolute bottom-3 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex space-x-2 sm:space-x-2.5">
         {backgroundImages.map((_, idx) => (
           <button
             key={idx}
             onClick={() => handleDotClick(idx)}
             disabled={isTransitioning}
-            className={`w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500 disabled:cursor-not-allowed ${
+            className={`transition-all duration-300 ease-out focus:outline-none disabled:cursor-not-allowed ${
               currentIndex === idx
-                ? 'bg-amber-500 scale-125 shadow-lg'
-                : 'bg-white/60 hover:bg-white/90 active:bg-white'
+                ? 'w-5 sm:w-6 md:w-7 h-2 sm:h-2.5 md:h-3 bg-white rounded-full shadow-lg border border-white/20 backdrop-blur-sm'
+                : 'w-2 sm:w-2.5 md:w-3 h-2 sm:h-2.5 md:h-3 bg-white/40 hover:bg-white/70 active:bg-white/90 rounded-full backdrop-blur-sm hover:scale-110'
             }`}
             aria-label={`Slide ${idx + 1}`}
           />
