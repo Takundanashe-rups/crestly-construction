@@ -93,31 +93,25 @@ export const ImagesSlider = React.memo(({
   // Memoize slideVariants
   const slideVariants = useMemo(() => ({
     initial: {
-      scale: 0,
       opacity: 0,
-      rotateX: 45,
     },
     visible: {
-      scale: 1,
-      rotateX: 0,
       opacity: 1,
       transition: {
-        duration: 0.5,
+        duration: 0.7,
         ease: [0.645, 0.045, 0.355, 1.0] as any,
       },
     },
     upExit: {
-      opacity: 1,
-      y: '-150%',
+      opacity: 0,
       transition: {
-        duration: 1,
+        duration: 0.7,
       },
     },
     downExit: {
-      opacity: 1,
-      y: '150%',
+      opacity: 0,
       transition: {
-        duration: 1,
+        duration: 0.7,
       },
     },
   }), []);
@@ -142,15 +136,23 @@ export const ImagesSlider = React.memo(({
       )}
       {areImagesLoaded && (
         <AnimatePresence>
-          <motion.img
+          <motion.div
             key={currentIndex}
-            src={loadedImages[currentIndex]}
             initial="initial"
             animate="visible"
             exit={direction === 'up' ? 'upExit' : 'downExit'}
             variants={slideVariants}
-            className="image h-full w-full absolute inset-0 object-cover object-center"
-          />
+            className="image h-full w-full absolute inset-0"
+            style={{ position: 'absolute', inset: 0 }}
+          >
+            <Image
+              src={loadedImages[currentIndex]}
+              alt=""
+              fill
+              style={{ objectFit: 'cover', objectPosition: 'center' }}
+              priority={currentIndex === 0}
+            />
+          </motion.div>
         </AnimatePresence>
       )}
     </div>
@@ -158,10 +160,10 @@ export const ImagesSlider = React.memo(({
 });
 
 const backgroundImages: string[] = [
-  '/images/back-1.jpg',
   '/images/back-2.jpg',
   '/images/back-3.jpg',
   '/images/back-5.jpg',
+  '/images/back-1.jpg',
 ];
 
 const HeroWithBoundary = () => (
