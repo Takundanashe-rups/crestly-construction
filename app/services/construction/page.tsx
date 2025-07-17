@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   FaTools,
   FaPencilRuler,
@@ -28,6 +28,7 @@ const services = [
   { icon: <FaCogs className="text-yellow-600 text-3xl" />, title: 'Other Services', description: 'We handle all related construction activities tailored to your goals.' },
 ];
 
+// Keep hero exactly as it is
 function ConstructionServicesHero() {
   return (
     <>
@@ -98,16 +99,106 @@ function ConstructionServicesHero() {
 }
 
 export default function ConstructionServices() {
+  const [isClient, setIsClient] = useState(false);
+  const [sectionVisible, setSectionVisible] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const [servicesVisible, setServicesVisible] = useState<boolean[]>(new Array(services.length).fill(false));
+
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    // Prevent flash by ensuring client-side rendering
+    setIsClient(true);
+
+    // Enhanced scroll animation observer
+    const initTimer = setTimeout(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.target === sectionRef.current && entry.isIntersecting) {
+              setSectionVisible(true);
+              
+              // Staggered animations
+              setTimeout(() => setHeaderVisible(true), 200);
+              
+              // Services staggered reveal
+              services.forEach((_, index) => {
+                setTimeout(() => {
+                  setServicesVisible(prev => {
+                    const newState = [...prev];
+                    newState[index] = true;
+                    return newState;
+                  });
+                }, 600 + (index * 150));
+              });
+            }
+          });
+        },
+        {
+          threshold: [0.1, 0.3, 0.5],
+          rootMargin: '-50px 0px -50px 0px'
+        }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
+
+      return () => {
+        observer.disconnect();
+      };
+    }, 50);
+
+    return () => {
+      clearTimeout(initTimer);
+    };
+  }, []);
+
+  // Prevent flash during SSR
+  if (!isClient) {
+    return (
+      <>
+        <ConstructionServicesHero />
+        
+        {/* Loading state */}
+        <section className="bg-gray-50 py-16 px-6 lg:px-12 opacity-100">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="h-10 w-80 bg-gray-300/30 rounded mx-auto mb-4 animate-pulse"></div>
+              <div className="h-6 w-96 bg-gray-200/30 rounded mx-auto animate-pulse"></div>
+            </div>
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {[...Array(10)].map((_, index) => (
+                <div key={index} className="bg-white rounded-xl shadow p-6 text-center border border-gray-200">
+                  <div className="mb-4 flex justify-center">
+                    <div className="w-12 h-12 bg-yellow-200/30 rounded animate-pulse"></div>
+                  </div>
+                  <div className="h-6 w-32 bg-gray-200 rounded mx-auto mb-2 animate-pulse"></div>
+                  <div className="space-y-2">
+                    <div className="h-4 w-full bg-gray-100 rounded animate-pulse"></div>
+                    <div className="h-4 w-3/4 bg-gray-100 rounded mx-auto animate-pulse"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <CallToAction />
+          </div>
+        </section>
+      </>
+    );
+  }
+
   return (
     <>
       <ConstructionServicesHero />
       
-      {/* Existing content below */}
-      <section className="bg-gray-50 py-16 px-6 lg:px-12">
-        {/* Heading */}
+      {/* Services Section */}
+      <section ref={sectionRef} className="bg-gray-50 py-16 px-6 lg:px-12">
         <div className="max-w-6xl mx-auto">
           {/* Heading */}
-          <div className="text-center mb-12">
+          <div className={`text-center mb-12 transition-all duration-800 ease-out transform ${
+            headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
             <h1 className="text-4xl font-bold text-gray-800">Our Construction Services</h1>
             <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
               From concept to completion, we deliver professional and reliable services across all construction phases.
@@ -119,7 +210,12 @@ export default function ConstructionServices() {
             {services.map((service, index) => (
               <div
                 key={index}
-                className="bg-white rounded-xl shadow hover:shadow-lg transition p-6 text-center border border-gray-200"
+                className={`bg-white rounded-xl shadow hover:shadow-lg transition-all duration-700 ease-out transform p-6 text-center border border-gray-200 ${
+                  servicesVisible[index] 
+                    ? 'opacity-100 translate-y-0 scale-100' 
+                    : 'opacity-0 translate-y-12 scale-98'
+                }`}
+                style={{ transitionDelay: `${index * 150}ms` }}
               >
                 <div className="mb-4 flex justify-center">{service.icon}</div>
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{service.title}</h3>

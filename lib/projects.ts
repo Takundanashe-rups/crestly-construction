@@ -50,8 +50,38 @@ export const projects: Project[] = [
     location: 'Mutare, Zimbabwe',
     duration: '18 months',
     client: 'NewWorld Ltd'
-  }
+  },
   // Add more projects here
+  {
+    id: '3',
+    slug: 'renovation-constructions',// 
+    title: 'Mutare',
+    excerpt: 'Complete floor tiling renovation project in Mutare featuring premium ceramic and porcelain tiles. Our skilled craftsmen transformed outdated flooring into stunning, durable surfaces using modern installation techniques. The project included substrate preparation, waterproofing, precision tile laying, and professional grouting to deliver a flawless finish that enhances both aesthetics and functionality.',
+    content: `Project Overview: This comprehensive floor tiling renovation project in Mutare showcases Crestly Constructions' expertise in transforming residential and commercial spaces through premium flooring solutions. Our team executed a complete floor renovation, replacing old surfaces with high-quality ceramic and porcelain tiles that combine durability with elegant design.
+
+The project involved meticulous planning and execution, starting with thorough substrate preparation to ensure optimal tile adhesion. We implemented advanced waterproofing systems in wet areas, followed by precision tile installation using modern leveling techniques. Our craftsmen paid special attention to pattern alignment, joint consistency, and seamless transitions between different areas.
+
+Key features include slip-resistant surfaces in high-traffic areas, decorative border designs, and professional grouting with stain-resistant materials. The renovation not only enhanced the aesthetic appeal but also improved the property's value and functionality, demonstrating our commitment to building Zimbabwe's tomorrow—one tile at a time.`,
+    heroImage: '/images/rd/ra.png',
+    category: 'Construction',
+    author: 'Crestly',
+    date: '2025-03-17',
+    isSticky: true,
+    comments: 8,
+    tags: ['Flooring', 'Tiling'],
+    gallery: [
+      '/images/rd/ra.png',
+      '/images/rd/rb.png',
+      '/images/rd/rc.png',
+      '/images/rd/rd.png'
+      
+    ],
+    status: 'published',
+    location: 'Mutare, Zimbabwe',
+    duration: '1 week',
+    client: 'New Ltd'
+  }
+  //new projeects
 ];
 
 export const getAllProjects = (): Project[] => 

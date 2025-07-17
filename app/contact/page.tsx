@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FaCheckCircle, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaClock, FaHardHat, FaSpinner } from 'react-icons/fa';
-import Link from 'next/link';
-import CallToAction from '../../components/sections/CallToAction';
 
+// Keep hero exactly as it is
 function ContactHero() {
   return (
     <>
@@ -80,6 +79,56 @@ export default function ContactPage() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  // Animation states
+  const [isClient, setIsClient] = useState(false);
+  const [sectionVisible, setSectionVisible] = useState(false);
+  const [titleVisible, setTitleVisible] = useState(false);
+  const [descriptionVisible, setDescriptionVisible] = useState(false);
+  const [formVisible, setFormVisible] = useState(false);
+  const [contactInfoVisible, setContactInfoVisible] = useState(false);
+
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Prevent flash by ensuring client-side rendering
+    setIsClient(true);
+
+    // Enhanced scroll animation observer
+    const initTimer = setTimeout(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.target === sectionRef.current && entry.isIntersecting) {
+              setSectionVisible(true);
+              
+              // Staggered animations
+              setTimeout(() => setTitleVisible(true), 200);
+              setTimeout(() => setDescriptionVisible(true), 400);
+              setTimeout(() => setFormVisible(true), 600);
+              setTimeout(() => setContactInfoVisible(true), 800);
+            }
+          });
+        },
+        {
+          threshold: [0.1, 0.3, 0.5],
+          rootMargin: '-50px 0px -50px 0px'
+        }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
+
+      return () => {
+        observer.disconnect();
+      };
+    }, 50);
+
+    return () => {
+      clearTimeout(initTimer);
+    };
+  }, []);
+
   function sanitize(input: string) {
     return input.replace(/</g, '<').replace(/>/g, '>').trim();
   }
@@ -115,37 +164,73 @@ export default function ContactPage() {
     }, 1200);
   }
 
+  // Prevent flash during SSR
+  if (!isClient) {
+    return (
+      <div className="relative min-h-screen bg-gradient-to-br from-white via-blue-50 to-slate-100">
+        <ContactHero />
+
+        {/* Loading state */}
+        <div className="py-20 md:py-24 lg:py-32 px-6 opacity-100">
+          <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-20">
+            <div className="flex-1">
+              <div className="h-12 w-80 bg-blue-200/30 rounded mb-6 animate-pulse"></div>
+              <div className="h-6 w-96 bg-gray-200/30 rounded mb-10 animate-pulse"></div>
+              <div className="w-full max-w-xl bg-white/90 rounded-2xl shadow-xl p-8 border border-slate-200 space-y-6">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="space-y-3">
+                    <div className="h-4 w-20 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-12 w-full bg-gray-100 rounded-lg animate-pulse"></div>
+                  </div>
+                ))}
+                <div className="h-12 w-full bg-blue-200 rounded-lg animate-pulse"></div>
+              </div>
+            </div>
+            <div className="w-full lg:w-[40%] bg-white/90 rounded-2xl shadow-xl p-8 border border-slate-200">
+              <div className="h-8 w-48 bg-blue-200 rounded mb-8 animate-pulse"></div>
+              <div className="space-y-8">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="space-y-3">
+                    <div className="h-5 w-32 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-4 w-full bg-gray-100 rounded animate-pulse"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-white via-blue-50 to-slate-100">
       <ContactHero />
 
       {/* Main Content Section with proper spacing */}
-      <div className="py-20 md:py-24 lg:py-32 px-6">
+      <div ref={sectionRef} className="py-20 md:py-24 lg:py-32 px-6">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-20">
           {/* LEFT SIDE */}
           <div className="flex-1">
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-900 mb-6"
-            >
+            {/* Title */}
+            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-blue-900 mb-6 transition-all duration-800 ease-out transform ${
+              titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}>
               Let's Get in Touch
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="text-gray-700 mb-10 max-w-xl leading-relaxed text-lg"
-            >
-              Planning a project or have questions? Fill out the form below and our team will get back to you shortly.
-            </motion.p>
+            </h1>
 
-            <motion.form
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="w-full max-w-xl bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-slate-200 space-y-6"
+            {/* Description */}
+            <p className={`text-gray-700 mb-10 max-w-xl leading-relaxed text-lg transition-all duration-800 ease-out transform ${
+              descriptionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}>
+              Planning a project or have questions? Fill out the form below and our team will get back to you shortly.
+            </p>
+
+            {/* Form */}
+            <form
+              className={`w-full max-w-xl bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-slate-200 space-y-6 transition-all duration-1000 ease-out transform ${
+                formVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-98'
+              }`}
               onSubmit={handleSubmit}
             >
               <input type="text" name="honey" className="hidden" value={form.honey} onChange={e => setForm(f => ({ ...f, honey: e.target.value }))} />
@@ -196,25 +281,18 @@ export default function ContactPage() {
               </button>
 
               {success && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex items-center justify-center gap-2 text-green-600 font-medium mt-4 p-3 bg-green-50 rounded-lg border border-green-200"
-                >
+                <div className="flex items-center justify-center gap-2 text-green-600 font-medium mt-4 p-3 bg-green-50 rounded-lg border border-green-200 animate-fadeIn">
                   <FaCheckCircle className="text-lg text-yellow-600" />
                   Message sent successfully!
-                </motion.div>
+                </div>
               )}
-            </motion.form>
+            </form>
           </div>
 
           {/* RIGHT SIDE */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.6 }}
-            className="w-full lg:w-[40%] bg-white/90 rounded-2xl shadow-xl p-8 border border-slate-200"
-          >
+          <div className={`w-full lg:w-[40%] bg-white/90 rounded-2xl shadow-xl p-8 border border-slate-200 transition-all duration-1000 ease-out transform ${
+            contactInfoVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-98'
+          }`}>
             <h2 className="text-2xl md:text-3xl font-semibold text-blue-900 mb-8">Contact Information</h2>
 
             <div className="space-y-8 text-sm text-slate-700">
@@ -237,8 +315,8 @@ export default function ContactPage() {
 
               <div>
                 <h3 className="font-semibold text-blue-800 flex items-center gap-2 mb-3 text-base"><FaClock className="text-yellow-600" /> Business Hours</h3>
-                <p className="mb-1">Mon – Fri: 8:00 AM – 6:00 PM</p>
-                <p>Sat – Sun: 9:00 AM – 1:00 PM</p>
+                <p className="mb-1">Mon -- Fri: 8:00 AM -- 6:00 PM</p>
+                <p>Sat -- Sun: 9:00 AM -- 1:00 PM</p>
               </div>
 
               <div className="mt-8">
@@ -263,9 +341,9 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
-      </div>
+    </div>
   );
 }

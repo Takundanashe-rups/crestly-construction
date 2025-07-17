@@ -8,9 +8,9 @@ interface FloatingCircleProps {
   x?: number;
   scale?: number;
   duration?: number;
+  as?: 'div' | 'span';
   'aria-hidden'?: boolean;
 }
-
 
 const FloatingCircle: React.FC<FloatingCircleProps> = ({
   className,
@@ -19,15 +19,20 @@ const FloatingCircle: React.FC<FloatingCircleProps> = ({
   x = 10,
   scale = 1,
   duration = 5,
+  as = 'div',
   ...rest
-}) => (
-  <motion.div
-    className={className + ' will-change-transform'}
-    initial={{ y: 0, x: 0, scale: 1 }}
-    animate={{ y: [0, y, 0], x: [0, x, 0], scale: [1, scale, 1] }}
-    transition={{ duration, repeat: Infinity, ease: 'easeInOut', delay }}
-    {...rest}
-  />
-);
+}) => {
+  const MotionComponent = motion[as];
+  
+  return (
+    <MotionComponent
+      className={className + ' will-change-transform' + (as === 'span' ? ' inline-block' : '')}
+      initial={{ y: 0, x: 0, scale: 1 }}
+      animate={{ y: [0, y, 0], x: [0, x, 0], scale: [1, scale, 1] }}
+      transition={{ duration, repeat: Infinity, ease: 'easeInOut', delay }}
+      {...rest}
+    />
+  );
+};
 
 export default FloatingCircle;

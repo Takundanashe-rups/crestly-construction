@@ -15,7 +15,7 @@ export default function ProjectsShowcase() {
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Get the two most recent/featured projects
-  const projects = getFeaturedProjects().slice(0, 2);
+  const projects = getFeaturedProjects().slice(0, 3);
 
   useEffect(() => {
     // Prevent flash by ensuring client-side rendering
