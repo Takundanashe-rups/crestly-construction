@@ -168,7 +168,7 @@ export default function ProjectsShowcase() {
               style={{
                 transitionDelay: `${idx * 250 + 500}ms`
               }}>
-                <div className={`bg-white/95 backdrop-blur-sm p-6 border border-gray-200/50 min-w-[280px] max-w-[360px] transition-all duration-500 group-hover:bg-white group-hover:shadow-3xl transform ${
+                <div className={`bg-white/95 backdrop-blur-sm p-6 border border-gray-200/50 min-w-[220px] max-w-[300px] transition-all duration-500 group-hover:bg-white group-hover:shadow-3xl transform ${
                   visibleProjects[idx] ? 'shadow-xl' : 'shadow-lg'
                 }`}>
                   
