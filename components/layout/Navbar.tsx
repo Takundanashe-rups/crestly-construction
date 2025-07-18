@@ -261,24 +261,24 @@ export default function Navbar() {
 
         {/* Right section - Better spacing and alignment */}
         <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
-          <button 
+          {/*<button 
             aria-label="Search" 
             className="text-blue-900 hover:text-blue-700 p-2 rounded-full hover:bg-blue-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-200"
           >
             <FaSearch size={16} />
-          </button>
+          </button>*/}
           <Link 
             href="/contact"
             className="bg-blue-900 text-white px-3 md:px-4 py-2 rounded-md font-semibold hover:bg-blue-800 transition-all duration-200 text-sm whitespace-nowrap shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
           >
             Get In Touch »
           </Link>
-          <button 
+          {/**<button 
             aria-label="Menu Grid" 
             className="hidden md:inline-flex text-blue-900 hover:text-blue-700 p-2 rounded-full hover:bg-blue-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-200"
           >
             <FaThLarge size={18} />
-          </button>
+          </button> */}
           {/* Hamburger for mobile */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}

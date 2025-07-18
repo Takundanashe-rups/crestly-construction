@@ -92,7 +92,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                   />
                 </div>
 
-                {/* Key Features or Additional Info (if you want to add more content) */}
+                {/* Key Features or Additional Info  */}
                 <div className="bg-gradient-to-br from-blue-50 to-slate-50 rounded-2xl p-8 border border-blue-100">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Project Highlights</h3>
                   <div className="grid sm:grid-cols-2 gap-4">

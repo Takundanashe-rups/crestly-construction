@@ -15,6 +15,9 @@ import {
 import { motion } from 'framer-motion';
 import CallToAction from '../../../components/sections/CallToAction';
 
+
+ 
+
 const services = [
   { icon: <FaPencilRuler className="text-yellow-600 text-3xl" />, title: 'Quotations', description: 'Transparent and competitive project estimates tailored to your budget.' },
   { icon: <FaDraftingCompass className="text-yellow-600 text-3xl" />, title: 'Architectural Design', description: 'Custom design solutions that combine functionality and beauty.' },

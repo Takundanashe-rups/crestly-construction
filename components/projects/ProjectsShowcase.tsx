@@ -203,18 +203,21 @@ export default function ProjectsShowcase() {
                   </h3>
 
                   {/* Excerpt with smooth reveal */}
-                  <p className={`text-gray-700 text-sm mb-4 line-clamp-3 leading-relaxed transition-all duration-700 ${
-                    visibleProjects[idx] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                  }`}
-                  style={{ transitionDelay: `${idx * 250 + 1000}ms` }}>
-                    {imageLoaded[idx] ? project.excerpt : (
-                      <div className="space-y-2">
-                        <div className="h-4 w-full bg-gray-100 rounded animate-pulse"></div>
-                        <div className="h-4 w-full bg-gray-100 rounded animate-pulse"></div>
-                        <div className="h-4 w-3/4 bg-gray-100 rounded animate-pulse"></div>
-                      </div>
-                    )}
-                  </p>
+                  {imageLoaded[idx] ? (
+                    <p className={`text-gray-700 text-sm mb-4 line-clamp-3 leading-relaxed transition-all duration-700 ${
+                      visibleProjects[idx] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                    }`}
+                    style={{ transitionDelay: `${idx * 250 + 1000}ms` }}>
+                      {project.excerpt}
+                    </p>
+                  ) : (
+                    <div className="space-y-2 mb-4 transition-all duration-700"
+                      style={{ transitionDelay: `${idx * 250 + 1000}ms` }}>
+                      <div className="h-4 w-full bg-gray-100 rounded animate-pulse"></div>
+                      <div className="h-4 w-full bg-gray-100 rounded animate-pulse"></div>
+                      <div className="h-4 w-3/4 bg-gray-100 rounded animate-pulse"></div>
+                    </div>
+                  )}
 
                   {/* Read More Button with final reveal */}
                   <div className={`transition-all duration-700 ${

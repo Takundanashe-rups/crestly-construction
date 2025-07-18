@@ -10,6 +10,10 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata = {
   title: 'Crestly Constructions',
   description: 'Building your vision with precision.',
+  icons: {
+    icon: '/favico.ico',
+    apple: '/apple-touch-icon.png',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

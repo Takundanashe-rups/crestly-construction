@@ -14,6 +14,10 @@ import {
 } from 'react-icons/fa';
 import CallToAction from '../../components/sections/CallToAction';
 
+export const metadata = {
+  title: 'About | Crestly Construction',
+};
+
 export default function AboutPage() {
   return (
     <main className="bg-white text-gray-900">

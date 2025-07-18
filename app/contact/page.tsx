@@ -4,7 +4,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FaCheckCircle, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaClock, FaHardHat, FaSpinner } from 'react-icons/fa';
 
-// Keep hero exactly as it is
+ 
+
+
+
 function ContactHero() {
   return (
     <>
@@ -298,7 +301,7 @@ export default function ContactPage() {
             <div className="space-y-8 text-sm text-slate-700">
               <div>
                 <h3 className="font-semibold text-blue-800 flex items-center gap-2 mb-3 text-base"><FaMapMarkerAlt className="text-yellow-600" /> Office Location</h3>
-                <p className="leading-relaxed">123 Construction Avenue<br />Industrial Park, Suite 456<br />Cityname, ST 12345</p>
+                <p className="leading-relaxed">P62B<br />Dangamvura<br />Mutare, Zimbabwe</p>
               </div>
 
               <div>
